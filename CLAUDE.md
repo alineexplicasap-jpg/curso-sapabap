@@ -126,6 +126,29 @@ Classes utilitárias: `.cta` (+ `.green`, `.gold`), `.chip`, `.eyebrow` (+ `.gol
 
 ---
 
+## Rastreamento obrigatório (Microsoft Clarity)
+
+**Toda página HTML nova criada no projeto DEVE obrigatoriamente incluir o script do Microsoft Clarity.**
+
+- Inserir no `<head>`, logo após o `<link rel="stylesheet" href="styles.css">`.
+- Usar sempre o mesmo ID do projeto: `x0e1hiz89c`.
+- Snippet padrão (não alterar):
+
+```html
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "x0e1hiz89c");
+</script>
+```
+
+> Páginas já com o script: `index.html`, `obrigado-sapabap.html`. Backups (`*-backup*.html`) não precisam, pois não fazem parte do site no ar.
+
+---
+
 ## O que NÃO fazer
 
 - ❌ Não reintroduzir React, Babel, JSX, ou qualquer biblioteca JS sem pedido explícito (o projeto foi explicitamente migrado para HTML/CSS puro).
