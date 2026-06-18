@@ -1,0 +1,11 @@
+{
+  "BASEINFO": {
+    "FROM": [
+      "ADRP",
+      "USR21"
+    ],
+    "ASSOCIATED": [
+      "ADRP"
+    ]
+  }
+}

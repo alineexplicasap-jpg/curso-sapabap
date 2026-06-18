@@ -1,0 +1,10 @@
+{
+  "BASEINFO": {
+    "FROM": [
+      "ASDW01"
+    ],
+    "ASSOCIATED": [
+      "ASDW_USERS_01"
+    ]
+  }
+}
