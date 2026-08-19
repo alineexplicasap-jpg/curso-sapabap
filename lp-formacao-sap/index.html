@@ -169,22 +169,23 @@
     }
     /* Foto de fundo ancorada à direita */
     .hero__photo {
-      position: absolute; z-index: -2; right: 0; bottom: 0; top: 0;
-      width: min(48%, 730px);
-      background: url("/assets/imagem-fundo.webp") no-repeat right bottom / contain;
-      mask-image:
-        linear-gradient(to right, transparent 0%, #000 26%),
-        linear-gradient(to bottom, transparent 0%, #000 18%);
-      -webkit-mask-image:
-        linear-gradient(to right, transparent 0%, #000 26%),
-        linear-gradient(to bottom, transparent 0%, #000 18%);
-      mask-composite: intersect;
-      -webkit-mask-composite: source-in;
+      position: absolute; inset: 0; z-index: -2;
+      /* Cor idêntica à das bordas da imagem: em telas mais largas que 1672px
+         as laterais continuam a foto em vez de mostrar um corte */
+      background-color: #07171b;
+      background-image: url("/assets/imagem-fundo.webp");
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: auto;
     }
-    /* Véu sobre a foto: garante leitura do texto sem apagá-la */
+    /* Véu sobre a foto: legibilidade do texto à esquerda e fusão com o fundo na base */
     .hero__photo::after {
       content: ""; position: absolute; inset: 0;
-      background: linear-gradient(96deg, rgba(4,20,26,.85) 0%, rgba(4,20,26,.35) 22%, rgba(4,20,26,0) 46%);
+      background:
+        /* funde a base da foto (a imagem termina em 706px) com o fundo, em toda a largura */
+        linear-gradient(180deg, rgba(7,23,27,0) 300px, rgba(7,23,27,.35) 470px, rgba(7,23,27,.8) 620px, #07171b 706px),
+        radial-gradient(115% 62% at 0% 100%, rgba(7,23,27,.94) 0%, rgba(7,23,27,.86) 38%, rgba(7,23,27,.45) 58%, rgba(7,23,27,0) 74%),
+        linear-gradient(96deg, rgba(7,23,27,.9) 0%, rgba(7,23,27,.62) 26%, rgba(7,23,27,.14) 46%, rgba(7,23,27,0) 60%);
     }
     .hero::before {
       content: ""; position: absolute; inset: 0; z-index: -1; opacity: .2;
@@ -463,11 +464,10 @@
       .hero__copy { max-width: 540px; }
       .hero h1 { max-width: 540px; }
       .hero__specs { max-width: 540px; }
-      .hero__photo { background-position: 72% center; }
       .hero__photo::after {
         background:
-          linear-gradient(96deg, #04141a 0%, rgba(4,20,26,.96) 30%, rgba(4,20,26,.82) 46%, rgba(4,20,26,.4) 60%, rgba(4,20,26,0) 74%),
-          linear-gradient(180deg, rgba(4,20,26,.62) 0%, rgba(4,20,26,0) 26%);
+          linear-gradient(96deg, rgba(4,20,26,.94) 0%, rgba(4,20,26,.72) 30%, rgba(4,20,26,.24) 50%, rgba(4,20,26,0) 66%),
+          linear-gradient(180deg, rgba(4,20,26,0) 48%, rgba(4,20,26,.75) 80%, #04141a 100%);
       }
       .shift { grid-template-columns: 1fr; }
       .pain-grid { grid-template-columns: repeat(2,1fr); }
@@ -523,6 +523,7 @@
       .hero__photo {
         top: 0; bottom: auto; right: 0; left: 0;
         width: 100%; height: 400px;
+        background-image: url("/assets/imagem-fundo-mob.webp");
         background-position: center top; background-size: auto 100%;
         mask-image: linear-gradient(to bottom, #000 55%, transparent 96%);
         -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 96%);
