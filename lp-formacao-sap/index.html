@@ -298,25 +298,7 @@
     .sap-screen__bar { height: 42px; display: flex; align-items: center; gap: 9px; padding: 0 13px; border-radius: 16px 16px 0 0; background: #dfe9ea; color: #24434a; }
     .sap-screen__dot { width: 8px; height: 8px; border-radius: 50%; background: #aac0c3; }
     .sap-screen__title { margin-left: 9px; font: 750 .65rem/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .05em; }
-    .sap-screen__main { display: grid; grid-template-columns: 150px 1fr; min-height: 420px; background: #f8fbfb; border-radius: 0 0 16px 16px; overflow: hidden; }
-    .sap-screen__side { padding: 18px 13px; background: #102f36; }
-    .sap-screen__side strong { display: block; padding: 0 8px 12px; color: rgba(255,255,255,.4); font: 750 .57rem/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; }
-    .sap-screen__nav { list-style: none; padding: 0; margin: 0; display: grid; gap: 5px; }
-    .sap-screen__nav li { padding: 9px 10px; border-radius: 9px; color: rgba(255,255,255,.72); font-size: .68rem; }
-    .sap-screen__nav li.active { color: var(--white); background: rgba(93,226,214,.15); }
-    .sap-screen__content { padding: 22px; color: #17373d; }
-    .sap-screen__breadcrumb { color: #70868b; font: 700 .58rem/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .04em; }
-    .sap-screen__content h3 { margin-top: 12px; font-size: 1.1rem; }
-    .sap-screen__filters { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 17px; }
-    .sap-screen__field { height: 43px; padding: 8px; border: 1px solid #d8e2e3; border-radius: 8px; background: #fff; }
-    .sap-screen__field span { display: block; color: #88999d; font-size: .49rem; text-transform: uppercase; }
-    .sap-screen__field b { display: block; margin-top: 3px; font-size: .65rem; }
-    .sap-screen__table { margin-top: 18px; border: 1px solid #dbe4e5; border-radius: 10px; overflow: hidden; background: #fff; }
-    .sap-screen__row { display: grid; grid-template-columns: 1.2fr 1.4fr .8fr .7fr; }
-    .sap-screen__row > span { padding: 10px 9px; border-right: 1px solid #e7eeee; border-bottom: 1px solid #e7eeee; font-size: .56rem; }
-    .sap-screen__row > span:last-child { border-right: 0; }
-    .sap-screen__row--head { background: #edf4f4; color: #60787e; font-weight: 800; }
-    .sap-screen__row:last-child > span { border-bottom: 0; }
+    .sap-screen__shot { display: block; width: 100%; height: auto; border-radius: 0 0 16px 16px; background: #f8fbfb; }
     .environment__copy h2 { font-size: clamp(2.2rem, 4vw, 4rem); line-height: 1.05; }
     .environment__copy > p { margin-top: 20px; color: rgba(255,255,255,.72); }
     .environment__list { list-style: none; padding: 0; margin: 29px 0 0; display: grid; gap: 18px; }
@@ -554,12 +536,6 @@
       .hero__micro { flex-wrap: wrap; }
       .pain-grid, .module-grid { grid-template-columns: 1fr; }
       .shift__statement, .shift__col { padding: 27px; }
-      .sap-screen__main { grid-template-columns: 1fr; min-height: 380px; }
-      .sap-screen__side { display: none; }
-      .sap-screen__filters { grid-template-columns: 1fr; }
-      .sap-screen__field:nth-child(n+2) { display: none; }
-      .sap-screen__row { grid-template-columns: 1.2fr 1fr .7fr; }
-      .sap-screen__row span:nth-child(2) { display: none; }
       .bonus-card { grid-template-columns: 1fr; }
       .price-card { padding: 30px 24px; }
       .price-card__price strong { font-size: 3.7rem; }
@@ -701,10 +677,7 @@
       <div class="container environment">
         <div class="sap-screen" data-reveal="left" aria-label="Demonstração visual do ambiente de prática">
           <div class="sap-screen__bar"><span class="sap-screen__dot"></span><span class="sap-screen__dot"></span><span class="sap-screen__dot"></span><span class="sap-screen__title">AMBIENTE DO ALUNO · S/4HANA</span></div>
-          <div class="sap-screen__main">
-            <aside class="sap-screen__side"><strong>Processos</strong><ul class="sap-screen__nav"><li class="active">Compras</li><li>Armazém</li><li>Vendas</li><li>Manutenção</li><li>Localização BR</li><li>Customizing</li></ul></aside>
-            <div class="sap-screen__content"><div class="sap-screen__breadcrumb">MM / PEDIDO DE COMPRAS / CRIAR</div><h3>Pedido de compras com impostos</h3><div class="sap-screen__filters"><div class="sap-screen__field"><span>Centro</span><b>BR01</b></div><div class="sap-screen__field"><span>Fornecedor</span><b>100045</b></div><div class="sap-screen__field"><span>Tipo</span><b>NB</b></div></div><div class="sap-screen__table"><div class="sap-screen__row sap-screen__row--head"><span>Material</span><span>Descrição</span><span>Quantidade</span><span>Status</span></div><div class="sap-screen__row"><span>MAT-1001</span><span>Componente industrial</span><span>25 UN</span><span style="color:#0b8067;font-weight:800">OK</span></div><div class="sap-screen__row"><span>MAT-2028</span><span>Material de consumo</span><span>10 UN</span><span style="color:#0b8067;font-weight:800">OK</span></div><div class="sap-screen__row"><span>SERV-018</span><span>Serviço manutenção</span><span>1 AU</span><span style="color:#a66a25;font-weight:800">REV.</span></div></div></div>
-          </div>
+          <img class="sap-screen__shot" src="/assets/pedido-de-compras.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="Tela ME23N do SAP exibindo um pedido de compra com itens, quantidades e preços">
         </div>
         <div class="environment__copy" data-reveal="right">
           <h2>Você não vai só assistir. Vai ter <span class="accent">um SAP para praticar</span> por 12 meses.</h2>
