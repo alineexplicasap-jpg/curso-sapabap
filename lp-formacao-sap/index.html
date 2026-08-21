@@ -23,6 +23,41 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "x0e1hiz89c");
   </script>
+  <!-- Meta Pixel — carrega só após primeira interação do usuário (scroll/click/touch/mouse) ou 4s -->
+  <script>
+    (function () {
+      var loaded = false;
+      function loadPixel() {
+        if (loaded) return;
+        loaded = true;
+        events.forEach(function (ev) { window.removeEventListener(ev, loadPixel, opts); });
+        clearTimeout(fallback);
+        !function (f, b, e, v, n, t, s) {
+          if (f.fbq) return; n = f.fbq = function () {
+            n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+          };
+          if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+          n.queue = []; t = b.createElement(e); t.async = !0;
+          t.src = v; s = b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t, s)
+        }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '564676471958688');
+        fbq('init', '940802978658042');
+        fbq('track', 'PageView');
+      }
+      var events = ['scroll', 'mousemove', 'touchstart', 'click', 'keydown'];
+      var opts = { once: true, passive: true, capture: true };
+      events.forEach(function (ev) { window.addEventListener(ev, loadPixel, opts); });
+      var fallback = setTimeout(loadPixel, 4000);
+    })();
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=564676471958688&ev=PageView&noscript=1" alt="" />
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=940802978658042&ev=PageView&noscript=1" alt="" />
+  </noscript>
+  <!-- End Meta Pixel Code -->
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/plus-jakarta-sans-latin.woff2" crossorigin>
   <style>
     @font-face {
