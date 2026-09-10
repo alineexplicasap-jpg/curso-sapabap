@@ -23,34 +23,48 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "x0e1hiz89c");
   </script>
-  <!-- Meta Pixel — carrega só após primeira interação do usuário (scroll/click/touch/mouse) ou 4s -->
+  <!-- ===== Meta Pixel + FOP (Funil de Otimizacao de Pixel) =====
+       Carrega IMEDIATO: em trafego pago, atrasar o pixel perde o PageView de
+       quem entra e sai rapido, e o algoritmo aprende com dado incompleto.
+       Hierarquia de eventos e gatilhos: ver tracking.js -->
   <script>
-    (function () {
-      var loaded = false;
-      function loadPixel() {
-        if (loaded) return;
-        loaded = true;
-        events.forEach(function (ev) { window.removeEventListener(ev, loadPixel, opts); });
-        clearTimeout(fallback);
-        !function (f, b, e, v, n, t, s) {
-          if (f.fbq) return; n = f.fbq = function () {
-            n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-          };
-          if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-          n.queue = []; t = b.createElement(e); t.async = !0;
-          t.src = v; s = b.getElementsByTagName(e)[0];
-          s.parentNode.insertBefore(t, s)
-        }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '564676471958688');
-        fbq('init', '940802978658042');
-        fbq('track', 'PageView');
+    window.AES_TRACK = {
+      pixel: '564676471958688',                 /* pixel que recebe os eventos do funil */
+      content: {
+        name: 'Formação SAP Logística',
+        category: 'formacao-sap-logistica',
+        id: 'formacao-logistica',
+        value: 1397.00,
+        currency: 'BRL'
       }
-      var events = ['scroll', 'mousemove', 'touchstart', 'click', 'keydown'];
-      var opts = { once: true, passive: true, capture: true };
-      events.forEach(function (ev) { window.addEventListener(ev, loadPixel, opts); });
-      var fallback = setTimeout(loadPixel, 4000);
+    };
+    (function () {
+      /* external_id anonimo e estavel (cookie 180d + localStorage): sobe o EMQ sem PII */
+      var K = '_aes_uid', v = '';
+      try { v = localStorage.getItem(K) || ''; } catch (e) { }
+      if (!v) v = (document.cookie.match(/(?:^|;\s*)_aes_uid=([^;]*)/) || [])[1] || '';
+      if (!v) v = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+        : 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 12);
+      try { localStorage.setItem(K, v); } catch (e) { }
+      document.cookie = K + '=' + v + ';path=/;max-age=15552000;SameSite=Lax';
+      window.AES_TRACK.uid = v;
+      window.AES_TRACK.pvId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+        : 'pv' + Date.now().toString(36) + Math.random().toString(36).slice(2, 12);
     })();
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '564676471958688', { external_id: window.AES_TRACK.uid });
+    fbq('init', '940802978658042', { external_id: window.AES_TRACK.uid });
+    fbq('track', 'PageView', {}, { eventID: window.AES_TRACK.pvId });
   </script>
+  <script src="../tracking.js" defer></script>
   <noscript>
     <img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=564676471958688&ev=PageView&noscript=1" alt="" />

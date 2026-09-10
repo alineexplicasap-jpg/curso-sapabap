@@ -70,6 +70,8 @@ sapabap/
 ├── index.html              → página completa, todas as 12 seções em HTML estático
 ├── styles.css              → todo o CSS (tokens em :root, BEM-ish por seção, media queries no fim, animações scroll-reveal no fim do arquivo)
 ├── scroll-reveal.js        → script vanilla (~25 linhas) que adiciona .is-visible em [data-reveal] quando entram no viewport
+├── tracking.js             → rastreamento Meta (Framework FOP): eventos do funil, UTM persistida, envio ao CAPI
+├── worker/                 → Cloudflare Worker do CAPI (capi.js, wrangler.toml, README com o passo a passo)
 ├── assets/                 → imagens usadas em produção (hero bg, logo, fotos da Aline)
 ├── research/               → screenshots de templates de referência (não usar em prod)
 ├── uploads/                → imagens de trabalho / iterações de IA (não usar em prod)
@@ -146,6 +148,39 @@ Classes utilitárias: `.cta` (+ `.green`, `.gold`), `.chip`, `.eyebrow` (+ `.gol
 ```
 
 > Páginas já com o script: `index.html`, `obrigado-sapabap.html`. Backups (`*-backup*.html`) não precisam, pois não fazem parte do site no ar.
+
+---
+
+## Rastreamento Meta (Framework FOP)
+
+Toda página do domínio carrega o Meta Pixel **imediatamente** no `<head>` (nada
+de lazy-load: em tráfego pago, atrasar o pixel perde o PageView de quem entra e
+sai rápido). O funil de eventos vive em `tracking.js`.
+
+**Pixel dos eventos do funil:** `564676471958688`. O `940802978658042` recebe
+só o PageView.
+
+| # | Evento | Gatilho |
+|---|---|---|
+| 1 | PageView | carga da página (inline no `<head>`) |
+| 2 | ViewContent | 25% de scroll ou 10s |
+| 3 | AddToWishlist | 50% de scroll ou 30s |
+| 4 | AddToCart | clique em CTA que leva à oferta (`#preco` / `#oferta`) |
+| 5 | InitiateCheckout | clique em link `pay.hotmart.com` |
+| 6 | Purchase | **integração nativa Hotmart → Meta**, nunca na página de obrigado |
+
+Regras ao mexer nisso:
+
+- Cada evento leva `event_id` único, espelhado no CAPI para o Meta deduplicar.
+- `value` + `currency` em todo evento com valor. Os valores ficam em
+  `window.AES_TRACK.content` no `<head>` de cada página.
+- `_fbp` e `_fbc` vão **crus** ao CAPI; `external_id` e geo vão em SHA-256.
+- Nunca enviar parâmetro sem propósito (`device_*`, `event_day`, `tracked_by`).
+- Ao criar página nova com oferta: copiar o bloco do `<head>`, ajustar
+  `content`, e incluir `<script src="tracking.js" defer>` (caminho relativo).
+- O token do CAPI **nunca** entra no repositório — é secret do Worker.
+
+Publicação e teste do Worker: ver `worker/README.md`.
 
 ---
 

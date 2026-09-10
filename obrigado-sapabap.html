@@ -26,6 +26,39 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "x0e1hiz89c");
   </script>
+  <!-- ===== Meta Pixel (pagina de obrigado) =====
+       Somente PageView. O Purchase NAO sai daqui: vem da integracao nativa
+       Hotmart -> Meta, que so dispara com pagamento aprovado (server-side).
+       O PageView aqui serve para montar o publico de compradores e EXCLUI-LO
+       das campanhas de aquisicao. -->
+  <script>
+    (function () {
+      var K = '_aes_uid', v = '';
+      try { v = localStorage.getItem(K) || ''; } catch (e) { }
+      if (!v) v = (document.cookie.match(/(?:^|;\s*)_aes_uid=([^;]*)/) || [])[1] || '';
+      if (!v) v = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+        : 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 12);
+      try { localStorage.setItem(K, v); } catch (e) { }
+      document.cookie = K + '=' + v + ';path=/;max-age=15552000;SameSite=Lax';
+      window.AES_UID = v;
+    })();
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '564676471958688', { external_id: window.AES_UID });
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=564676471958688&ev=PageView&noscript=1" alt="" />
+  </noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 
 <body>
