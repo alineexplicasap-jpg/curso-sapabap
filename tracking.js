@@ -19,7 +19,7 @@
   /* >>> URL do Worker de CAPI. Cole aqui depois de publicar o Worker, ex.:
          var ENDPOINT_CAPI = 'https://capi-aline.SEU-USUARIO.workers.dev';
          Enquanto ficar vazio, o CAPI fica desligado e so o Pixel do navegador roda. <<< */
-  var ENDPOINT_CAPI = '';
+  var ENDPOINT_CAPI = 'https://capi-aline.aline-explicasap.workers.dev';
 
   var CFG = window.AES_TRACK;
   if (!CFG || !CFG.pixel) return;
