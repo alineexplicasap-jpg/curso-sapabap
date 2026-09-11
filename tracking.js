@@ -2,28 +2,34 @@
    Tracking Meta — Framework FOP (Funil de Otimizacao de Pixel)
    Aline Explica SAP · vanilla, sem GTM, sem dependencias
 
+   Carregar no <head>, SEM defer, logo depois de definir window.AES_TRACK:
+     <script>window.AES_TRACK = { pixel, pixelsExtra, content }</script>
+     <script src="tracking.js"></script>
+
    Funil (LP de venda direta, sem formulario, checkout externo Hotmart):
-     1 PageView         carga da pagina                   (disparado no <head>)
+     1 PageView         carga da pagina
      2 ViewContent      25% de scroll ou 10s
      3 AddToWishlist    50% de scroll ou 30s
      4 AddToCart        clique em CTA que leva a oferta
      5 InitiateCheckout clique no botao do checkout Hotmart
      6 Purchase         Hotmart (integracao nativa server-side) — nao vive aqui
 
-   Cada evento carrega um event_id unico, espelhado no CAPI para deduplicacao.
-   Configuracao por pagina: window.AES_TRACK, definido no <head>.
+   Todo evento leva: event_id unico (espelhado no CAPI para deduplicacao),
+   fonte da visita (meta, instagram, google, direto...) e, quando ha UTM,
+   campanha e anuncio. Eventos do funil vao so para AES_TRACK.pixel; os
+   pixels em AES_TRACK.pixelsExtra recebem apenas o PageView.
    ========================================================================== */
 (function () {
   'use strict';
 
-  /* >>> URL do Worker de CAPI. Cole aqui depois de publicar o Worker, ex.:
-         var ENDPOINT_CAPI = 'https://capi-aline.SEU-USUARIO.workers.dev';
-         Enquanto ficar vazio, o CAPI fica desligado e so o Pixel do navegador roda. <<< */
+  /* >>> URL do Worker de CAPI. Vazio = CAPI desligado, so o Pixel do navegador roda. <<< */
   var ENDPOINT_CAPI = 'https://capi-aline.aline-explicasap.workers.dev';
 
   var CFG = window.AES_TRACK;
   if (!CFG || !CFG.pixel) return;
 
+  var PIXEL = CFG.pixel;
+  var PIXELS_TODOS = [PIXEL].concat(CFG.pixelsExtra || []);
   var C = CFG.content || {};
   var MOEDA = C.currency || 'BRL';
   var CAPI = CFG.capi || ENDPOINT_CAPI;
@@ -36,7 +42,7 @@
   }
 
   function leCookie(nome) {
-    var m = document.cookie.match(new RegExp('(?:^|;\s*)' + nome + '=([^;]*)'));
+    var m = document.cookie.match(new RegExp('(?:^|;\\s*)' + nome + '=([^;]*)'));
     return m ? decodeURIComponent(m[1]) : '';
   }
 
@@ -52,7 +58,18 @@
     return v || leCookie(chave);
   }
 
-  /* ---------- 1. origem do trafego (UTM + fbclid), persistida 90 dias ----- */
+  function limpa(s) {
+    return String(s).replace(/[^a-zA-Z0-9_~-]/g, '-');
+  }
+
+  /* ---------- 1. visitante: external_id anonimo e estavel (180 dias) ------ */
+
+  var UID = recupera('_aes_uid');
+  if (!UID) UID = uuid();
+  guarda('_aes_uid', UID, 180);
+  CFG.uid = UID;
+
+  /* ---------- 2. origem da visita (UTM + fbclid), persistida 90 dias ------ */
 
   var CHAVES_UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
 
@@ -74,7 +91,54 @@
     try { return JSON.parse(recupera('_aes_src') || '{}'); } catch (e) { return {}; }
   })();
 
-  /* ---------- 2. envio: Pixel + CAPI com o MESMO event_id ---------------- */
+  /* de onde veio esta visita, em ordem de confianca:
+       1. utm_source salvo (clique em anuncio nos ultimos 90 dias)
+       2. fbclid sem UTM -> veio do Meta mesmo assim
+       3. site de onde a pessoa chegou (instagram, google, youtube...)
+       4. nada -> direto (digitou o link, bio, WhatsApp) */
+  var FONTE = (function () {
+    if (origem.utm_source) return limpa(origem.utm_source);
+    if (origem.fbclid) return 'meta';
+    try {
+      var host = document.referrer ? new URL(document.referrer).hostname : '';
+      if (host && host !== location.hostname) {
+        return limpa(host.replace(/^(www|l|lm|m)\./, '').split('.')[0]);
+      }
+    } catch (e) { }
+    return 'direto';
+  })();
+  CFG.fonte = FONTE;
+  document.documentElement.setAttribute('data-aes-fonte', FONTE);
+
+  /* parametros de origem que vao em TODO evento */
+  function paramsOrigem() {
+    var p = { fonte: FONTE };
+    if (origem.utm_campaign) p.campanha = origem.utm_campaign;
+    if (origem.utm_content) p.anuncio = origem.utm_content;
+    return p;
+  }
+
+  /* ---------- 3. Pixel: snippet oficial + init com Advanced Matching ------ */
+
+  !function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () {
+      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s)
+  }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+  PIXELS_TODOS.forEach(function (id) {
+    /* sem configuracao automatica: evita SubscribedButtonClick e o PageView extra
+       que o Pixel dispara sozinho em mudanca de URL. Nao ha formulario na pagina,
+       entao a correspondencia automatica nao perde nada. */
+    fbq('set', 'autoConfig', false, id);
+    fbq('init', id, { external_id: UID });
+  });
+
+  /* ---------- 4. envio: Pixel + CAPI com o MESMO event_id ---------------- */
 
   function fbc() {
     var c = leCookie('_fbc');
@@ -90,7 +154,7 @@
       event_id: id,
       event_time: Math.floor(Date.now() / 1000),
       event_source_url: location.href,
-      external_id: CFG.uid,
+      external_id: UID,
       fbp: leCookie('_fbp'),
       fbc: fbc(),
       custom_data: params || {},
@@ -113,32 +177,37 @@
     } catch (e) { }
   }
 
-  function dispara(nome, params, idPronto) {
-    var id = idPronto || uuid();
-    if (typeof window.fbq === 'function') {
-      fbq('trackSingle', CFG.pixel, nome, params || {}, { eventID: id });
-    }
+  /* dispara em um pixel so (o do funil) */
+  function dispara(nome, params) {
+    var id = uuid();
+    fbq('trackSingle', PIXEL, nome, params || {}, { eventID: id });
     paraCapi(nome, params, id);
     return id;
   }
 
-  /* espelha no CAPI o PageView que ja saiu no <head> (mesmo event_id) */
-  if (CFG.pvId) paraCapi('PageView', {}, CFG.pvId);
+  /* ---------- 5. PageView: em todos os pixels, imediato ------------------- */
 
-  /* ---------- 3. parametros de conteudo ---------------------------------- */
+  (function () {
+    var id = uuid();
+    var p = paramsOrigem();
+    fbq('track', 'PageView', p, { eventID: id });
+    paraCapi('PageView', p, id);
+  })();
 
-  function conteudo(comValor) {
-    var p = {
-      content_name: C.name,
-      content_category: C.category,
-      content_type: 'product',
-      content_ids: [C.id]
-    };
-    if (comValor) { p.value = C.value; p.currency = MOEDA; }
+  /* ---------- 6. parametros de conteudo ---------------------------------- */
+
+  function conteudo() {
+    var p = paramsOrigem();
+    p.content_name = C.name;
+    p.content_category = C.category;
+    p.content_type = 'product';
+    p.content_ids = [C.id];
+    p.value = C.value;
+    p.currency = MOEDA;
     return p;
   }
 
-  /* ---------- 4. degraus por scroll / tempo ------------------------------ */
+  /* ---------- 7. degraus por scroll / tempo ------------------------------ */
 
   var feitos = {};
   function umaVez(nome, fn) {
@@ -148,13 +217,13 @@
   }
 
   var DEGRAUS = [
-    { nome: 'ViewContent',   scroll: 25, tempo: 10000, valor: true },
-    { nome: 'AddToWishlist', scroll: 50, tempo: 30000, valor: true }
+    { nome: 'ViewContent',   scroll: 25, tempo: 10000 },
+    { nome: 'AddToWishlist', scroll: 50, tempo: 30000 }
   ];
 
   DEGRAUS.forEach(function (d) {
     setTimeout(function () {
-      umaVez(d.nome, function () { dispara(d.nome, conteudo(d.valor)); });
+      umaVez(d.nome, function () { dispara(d.nome, conteudo()); });
     }, d.tempo);
   });
 
@@ -173,43 +242,20 @@
       agendado = false;
       var pct = percentualLido();
       DEGRAUS.forEach(function (d) {
-        if (pct >= d.scroll) umaVez(d.nome, function () { dispara(d.nome, conteudo(d.valor)); });
+        if (pct >= d.scroll) umaVez(d.nome, function () { dispara(d.nome, conteudo()); });
       });
     });
   }, { passive: true });
 
-  /* ---------- 5. cliques: oferta e checkout ------------------------------ */
-
-  function limpa(s) {
-    return String(s).replace(/[^a-zA-Z0-9_~-]/g, '-');
-  }
-
-  /* de onde veio esta visita, em ordem de confianca:
-       1. utm_source salvo (clique em anuncio nos ultimos 90 dias)
-       2. fbclid sem UTM -> veio do Meta mesmo assim
-       3. site de onde a pessoa chegou (instagram, google, youtube...)
-       4. nada -> direto (digitou o link, bio, WhatsApp) */
-  function fonteDaVisita() {
-    if (origem.utm_source) return origem.utm_source;
-    if (origem.fbclid) return 'meta';
-    try {
-      var host = document.referrer ? new URL(document.referrer).hostname : '';
-      if (host && host !== location.hostname) {
-        return host.replace(/^(www|l|lm|m)\./, '').split('.')[0];
-      }
-    } catch (e) { }
-    return 'direto';
-  }
+  /* ---------- 8. cliques: oferta e checkout ------------------------------ */
 
   /* repassa a origem para a Hotmart (src = fonte, sck = campanha~anuncio~uid) */
   function comRastreio(url) {
     try {
       var u = new URL(url, location.href);
-      if (!u.searchParams.get('src')) {
-        u.searchParams.set('src', limpa(fonteDaVisita()));
-      }
+      if (!u.searchParams.get('src')) u.searchParams.set('src', FONTE);
       if (!u.searchParams.get('sck')) {
-        var sck = [origem.utm_campaign, origem.utm_content, CFG.uid].filter(Boolean).join('~');
+        var sck = [origem.utm_campaign, origem.utm_content, UID].filter(Boolean).join('~');
         u.searchParams.set('sck', limpa(sck).slice(0, 100));
       }
       return u.toString();
@@ -217,12 +263,10 @@
   }
 
   /* reescreve os links do checkout ja no carregamento: assim a origem vai junto
-     tambem em "abrir em nova aba", botao do meio e "copiar link", que nao passam
-     pelo clique. Deixa a fonte visivel em <html data-aes-fonte> para conferencia. */
+     tambem em "abrir em nova aba", botao do meio e "copiar link" */
   function marcaLinksCheckout() {
     var links = document.querySelectorAll('a[href*="pay.hotmart.com"]');
     for (var i = 0; i < links.length; i++) links[i].href = comRastreio(links[i].href);
-    document.documentElement.setAttribute('data-aes-fonte', fonteDaVisita());
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', marcaLinksCheckout);
@@ -241,7 +285,7 @@
     if (/pay\.hotmart\.com/i.test(href)) {
       link.href = comRastreio(link.href);
       umaVez('InitiateCheckout', function () {
-        var p = conteudo(true);
+        var p = conteudo();
         p.num_items = 1;
         dispara('InitiateCheckout', p);
       });
@@ -257,12 +301,12 @@
         secao.scrollIntoView({ block: 'start' });
       }
       if (/preco|oferta/i.test(href)) {
-        umaVez('AddToCart', function () { dispara('AddToCart', conteudo(true)); });
+        umaVez('AddToCart', function () { dispara('AddToCart', conteudo()); });
       }
     }
   }, true);
 
-  /* ---------- 6. api publica (para eventos manuais, se precisar) ---------- */
+  /* ---------- 9. api publica (para eventos manuais, se precisar) ---------- */
 
   window.aesTrack = dispara;
 

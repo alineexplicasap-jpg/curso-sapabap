@@ -153,16 +153,17 @@ Classes utilitárias: `.cta` (+ `.green`, `.gold`), `.chip`, `.eyebrow` (+ `.gol
 
 ## Rastreamento Meta (Framework FOP)
 
-Toda página do domínio carrega o Meta Pixel **imediatamente** no `<head>` (nada
-de lazy-load: em tráfego pago, atrasar o pixel perde o PageView de quem entra e
-sai rápido). O funil de eventos vive em `tracking.js`.
+Tudo vive em `tracking.js` (snippet do pixel, init, PageView, funil, origem,
+CAPI), carregado no `<head>` **sem `defer`**, como o `styles.css` — em tráfego
+pago, atrasar o pixel perde o PageView de quem entra e sai rápido. O `<head>` de
+cada página só define `window.AES_TRACK` (pixel, pixelsExtra, content).
 
 **Pixel dos eventos do funil:** `564676471958688`. O `940802978658042` recebe
 só o PageView.
 
 | # | Evento | Gatilho |
 |---|---|---|
-| 1 | PageView | carga da página (inline no `<head>`) |
+| 1 | PageView | carga da página |
 | 2 | ViewContent | 25% de scroll ou 10s |
 | 3 | AddToWishlist | 50% de scroll ou 30s |
 | 4 | AddToCart | clique em CTA que leva à oferta (`#preco` / `#oferta`) |
@@ -180,8 +181,10 @@ Regras ao mexer nisso:
   configuração automática gera `SubscribedButtonClick` e um PageView extra sem
   `event_id` a cada mudança de hash. Não religar.
 - Links `#âncora` rolam via `scrollIntoView` sem mudar a URL (mesmo motivo).
+- Todo evento leva `fonte` (meta, instagram, google, direto...) e, com UTM,
+  `campanha` e `anuncio`. A mesma origem vai para a Hotmart em `src`/`sck`.
 - Ao criar página nova com oferta: copiar o bloco do `<head>`, ajustar
-  `content`, e incluir `<script src="tracking.js" defer>` (caminho relativo).
+  `content`, e manter `<script src="tracking.js">` **sem defer** (caminho relativo).
 - O token do CAPI **nunca** entra no repositório — é secret do Worker.
 
 Publicação e teste do Worker: ver `worker/README.md`.
