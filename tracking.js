@@ -216,6 +216,20 @@
     } catch (e) { return url; }
   }
 
+  /* reescreve os links do checkout ja no carregamento: assim a origem vai junto
+     tambem em "abrir em nova aba", botao do meio e "copiar link", que nao passam
+     pelo clique. Deixa a fonte visivel em <html data-aes-fonte> para conferencia. */
+  function marcaLinksCheckout() {
+    var links = document.querySelectorAll('a[href*="pay.hotmart.com"]');
+    for (var i = 0; i < links.length; i++) links[i].href = comRastreio(links[i].href);
+    document.documentElement.setAttribute('data-aes-fonte', fonteDaVisita());
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', marcaLinksCheckout);
+  } else {
+    marcaLinksCheckout();
+  }
+
   document.addEventListener('click', function (ev) {
     var alvo = ev.target;
     if (!alvo || !alvo.closest) return;
