@@ -184,12 +184,29 @@
     return String(s).replace(/[^a-zA-Z0-9_~-]/g, '-');
   }
 
-  /* repassa a origem para a Hotmart (src = origem, sck = campanha~anuncio~uid) */
+  /* de onde veio esta visita, em ordem de confianca:
+       1. utm_source salvo (clique em anuncio nos ultimos 90 dias)
+       2. fbclid sem UTM -> veio do Meta mesmo assim
+       3. site de onde a pessoa chegou (instagram, google, youtube...)
+       4. nada -> direto (digitou o link, bio, WhatsApp) */
+  function fonteDaVisita() {
+    if (origem.utm_source) return origem.utm_source;
+    if (origem.fbclid) return 'meta';
+    try {
+      var host = document.referrer ? new URL(document.referrer).hostname : '';
+      if (host && host !== location.hostname) {
+        return host.replace(/^(www|l|lm|m)\./, '').split('.')[0];
+      }
+    } catch (e) { }
+    return 'direto';
+  }
+
+  /* repassa a origem para a Hotmart (src = fonte, sck = campanha~anuncio~uid) */
   function comRastreio(url) {
     try {
       var u = new URL(url, location.href);
       if (!u.searchParams.get('src')) {
-        u.searchParams.set('src', limpa(origem.utm_source || 'meta'));
+        u.searchParams.set('src', limpa(fonteDaVisita()));
       }
       if (!u.searchParams.get('sck')) {
         var sck = [origem.utm_campaign, origem.utm_content, CFG.uid].filter(Boolean).join('~');
