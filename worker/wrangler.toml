@@ -5,7 +5,7 @@ compatibility_date = "2025-06-01"
 [vars]
 PIXEL_ID = "564676471958688"
 GRAPH_VERSION = "v21.0"
-ALLOWED_ORIGINS = "https://alineexplicasap.com.br,https://www.alineexplicasap.com.br,http://localhost:1922"
+ALLOWED_ORIGINS = "https://lp.alineexplicasap.com.br,https://alineexplicasap.com.br,https://www.alineexplicasap.com.br,http://localhost:1922"
 
 # CAPI_TOKEN e TEST_EVENT_CODE sao SECRETS — nunca coloque neste arquivo.
 #   npx wrangler secret put CAPI_TOKEN

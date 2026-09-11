@@ -46,7 +46,7 @@ ETAPA 3 — Variáveis de ambiente
     Valor: v21.0
 
     Nome: ALLOWED_ORIGINS
-    Valor: https://alineexplicasap.com.br,https://www.alineexplicasap.com.br,http://localhost:1922
+    Valor: https://lp.alineexplicasap.com.br,https://alineexplicasap.com.br,https://www.alineexplicasap.com.br,http://localhost:1922
 
 14. Agora adicione uma QUARTA variável, mas do tipo SECRET (marque a opção
     "Secret" / "Encrypt"):

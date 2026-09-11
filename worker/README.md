@@ -71,6 +71,6 @@ o site não quebra.
 
 Hoje o endpoint é `*.workers.dev` — domínio diferente do site, então adblocks
 bloqueiam com mais facilidade. No dia em que o domínio apontar para o
-Cloudflare, crie uma rota `alineexplicasap.com.br/api/capi*` para este Worker e
-troque o `ENDPOINT_CAPI` para `https://alineexplicasap.com.br/api/capi`.
+Cloudflare, crie uma rota `lp.alineexplicasap.com.br/api/capi*` para este Worker e
+troque o `ENDPOINT_CAPI` para `https://lp.alineexplicasap.com.br/api/capi`.
 Vira first-party: menos bloqueio e EMQ melhor.
