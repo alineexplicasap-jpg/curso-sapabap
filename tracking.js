@@ -254,6 +254,9 @@
     try {
       var u = new URL(url, location.href);
       if (!u.searchParams.get('src')) u.searchParams.set('src', FONTE);
+      /* fbclid junto: se o checkout capturar, o Purchase sai com fbc e a
+         ligacao compra -> clique no anuncio fica mais forte */
+      if (origem.fbclid && !u.searchParams.get('fbclid')) u.searchParams.set('fbclid', origem.fbclid);
       if (!u.searchParams.get('sck')) {
         var sck = [origem.utm_campaign, origem.utm_content, UID].filter(Boolean).join('~');
         u.searchParams.set('sck', limpa(sck).slice(0, 100));
