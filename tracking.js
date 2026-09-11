@@ -148,7 +148,7 @@
   }
 
   var DEGRAUS = [
-    { nome: 'ViewContent',   scroll: 25, tempo: 10000, valor: false },
+    { nome: 'ViewContent',   scroll: 25, tempo: 10000, valor: true },
     { nome: 'AddToWishlist', scroll: 50, tempo: 30000, valor: true }
   ];
 
@@ -217,8 +217,17 @@
       return;
     }
 
-    if (href.charAt(0) === '#' && /preco|oferta/i.test(href)) {
-      umaVez('AddToCart', function () { dispara('AddToCart', conteudo(true)); });
+    if (href.charAt(0) === '#' && href.length > 1) {
+      /* rola sem mudar o hash: a cada mudanca de URL o Pixel dispara um PageView
+         extra, sem event_id, que nunca deduplica e infla o denominador */
+      var secao = document.getElementById(href.slice(1));
+      if (secao) {
+        ev.preventDefault();
+        secao.scrollIntoView({ block: 'start' });
+      }
+      if (/preco|oferta/i.test(href)) {
+        umaVez('AddToCart', function () { dispara('AddToCart', conteudo(true)); });
+      }
     }
   }, true);
 

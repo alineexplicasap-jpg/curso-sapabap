@@ -58,6 +58,11 @@
       t.src = v; s = b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t, s)
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    /* sem configuracao automatica: evita SubscribedButtonClick e o PageView extra
+       que o Pixel dispara sozinho em mudanca de URL. Nao ha formulario na pagina,
+       entao a correspondencia automatica nao perde nada. */
+    fbq('set', 'autoConfig', false, '564676471958688');
+    fbq('set', 'autoConfig', false, '940802978658042');
     fbq('init', '564676471958688', { external_id: window.AES_TRACK.uid });
     fbq('init', '940802978658042', { external_id: window.AES_TRACK.uid });
     fbq('track', 'PageView', {}, { eventID: window.AES_TRACK.pvId });

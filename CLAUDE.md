@@ -176,6 +176,10 @@ Regras ao mexer nisso:
   `window.AES_TRACK.content` no `<head>` de cada página.
 - `_fbp` e `_fbc` vão **crus** ao CAPI; `external_id` e geo vão em SHA-256.
 - Nunca enviar parâmetro sem propósito (`device_*`, `event_day`, `tracked_by`).
+- `autoConfig` do Pixel fica **desligado** (`fbq('set','autoConfig',false,...)`): a
+  configuração automática gera `SubscribedButtonClick` e um PageView extra sem
+  `event_id` a cada mudança de hash. Não religar.
+- Links `#âncora` rolam via `scrollIntoView` sem mudar a URL (mesmo motivo).
 - Ao criar página nova com oferta: copiar o bloco do `<head>`, ajustar
   `content`, e incluir `<script src="tracking.js" defer>` (caminho relativo).
 - O token do CAPI **nunca** entra no repositório — é secret do Worker.
