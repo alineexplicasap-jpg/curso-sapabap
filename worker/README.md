@@ -74,3 +74,9 @@ bloqueiam com mais facilidade. No dia em que o domínio apontar para o
 Cloudflare, crie uma rota `lp.alineexplicasap.com.br/api/capi*` para este Worker e
 troque o `ENDPOINT_CAPI` para `https://lp.alineexplicasap.com.br/api/capi`.
 Vira first-party: menos bloqueio e EMQ melhor.
+
+## Onde fica o token localmente
+
+Em `worker/.dev.vars` (ignorado pelo git — nunca vai para o GitHub). É o
+formato nativo do wrangler: `npx wrangler dev` lê esse arquivo sozinho. O
+mesmo token está como Secret no Cloudflare e no pixel da Hotmart.

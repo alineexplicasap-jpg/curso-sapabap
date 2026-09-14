@@ -15,3 +15,10 @@ desktop.ini
 
 # Logs
 *.log
+
+# Segredos (tokens, chaves) — nunca versionar
+.dev.vars
+**/.dev.vars
+.env
+.env.*
+*.secret
