@@ -168,7 +168,7 @@ só o PageView.
 | 1 | PageView | carga da página |
 | 2 | ViewContent | 25% de scroll ou 10s |
 | 3 | AddToWishlist | 50% de scroll ou 30s |
-| 4 | AddToCart | clique em CTA que leva à oferta (`#preco` / `#oferta`) |
+| 4 | AddToCart | clique em CTA que leva à oferta (`#preco` / `#oferta`) ou, se pulou a oferta, no próprio clique de checkout (barra fixa) |
 | 5 | InitiateCheckout | clique em link `pay.hotmart.com` |
 | 6 | Purchase | **integração nativa Hotmart → Meta**, nunca na página de obrigado |
 

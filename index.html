@@ -1174,9 +1174,11 @@
   </footer>
   <div class="footer-stripe"></div>
 
-  <!-- barra fixa de CTA (só mobile, via CSS). Mesmo href="#preco": o tracking.js dispara AddToCart -->
+  <!-- barra fixa de CTA (só mobile, via CSS). Vai direto ao checkout: o tracking.js
+       dispara AddToCart + InitiateCheckout e repassa a origem (src/sck/fbclid) -->
   <div class="cta-fixa">
-    <a href="#preco" class="cta green">
+    <a href="https://pay.hotmart.com/E103733089W?off=2tjx6r90&amp;checkoutMode=10" target="_blank"
+      rel="noopener noreferrer" class="cta green">
       GARANTIR MINHA VAGA AGORA
       <svg class="arrow" viewBox="0 0 24 24" fill="none" width="18" height="18">
         <path d="M5 12h14M13 5l7 7-7 7" stroke="#012b14" stroke-width="2.2" stroke-linecap="round"

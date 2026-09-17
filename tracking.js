@@ -287,6 +287,9 @@
 
     if (/pay\.hotmart\.com/i.test(href)) {
       link.href = comRastreio(link.href);
+      /* quem vai direto ao checkout (barra fixa) tambem passou pela oferta:
+         garante o degrau AddToCart antes do InitiateCheckout, sem duplicar */
+      umaVez('AddToCart', function () { dispara('AddToCart', conteudo()); });
       umaVez('InitiateCheckout', function () {
         var p = conteudo();
         p.num_items = 1;
