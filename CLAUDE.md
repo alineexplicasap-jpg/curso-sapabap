@@ -1,4 +1,4 @@
-| Interatividade | `<details>`/`<summary>` nativo (FAQ) + `cta-fixa.js` (barra fixa de CTA no mobile) + 1 script vanilla `scroll-reveal.js`# CLAUDE.md — Projeto SAP ABAP (Aline Explica SAP)
+# CLAUDE.md — Projeto SAP ABAP (Aline Explica SAP)
 
 Este arquivo orienta o Claude Code ao trabalhar neste repositório. Leia antes de qualquer ação.
 
@@ -53,7 +53,7 @@ Landing page do **Curso Prático SAP ABAP** ministrado pela Aline (marca "Aline 
 |---|---|
 | Marcação | HTML5 estático puro |
 | Estilização | CSS3 externo em `styles.css` (variáveis CSS, grid, flex, media queries) |
-| Interatividade | `<details>`/`<summary>` nativo (FAQ) + 1 script vanilla `scroll-reveal.js` (~25 linhas) com IntersectionObserver para animar elementos `[data-reveal]` ao entrar no viewport |
+| Interatividade | `<details>`/`<summary>` nativo (FAQ) + `cta-fixa.js` (barra fixa de CTA no mobile, ~18 linhas) + 1 script vanilla `scroll-reveal.js` (~25 linhas) com IntersectionObserver para animar elementos `[data-reveal]` ao entrar no viewport |
 | Tipografia | Google Fonts — Plus Jakarta Sans (display) + JetBrains Mono (monospace) |
 | Ícones | SVG inline no HTML |
 | Build | **Sem build step.** É HTML/CSS + 1 JS vanilla. |
