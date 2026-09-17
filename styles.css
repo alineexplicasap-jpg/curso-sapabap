@@ -2367,3 +2367,179 @@ section {
     transition: none !important;
   }
 }
+
+/* ============================================================
+   VARIANTE /lp-otimizada — CTA na primeira tela do celular
+   Escopo: só .hero--otimizada, .hero__prova e .cta-fixa.
+   O index.html não usa essas classes e não muda.
+   ============================================================ */
+
+/* desktop: respiro entre formas de pagamento e pilares (agora abaixo do CTA) */
+.hero--otimizada .hero__pay {
+  margin-bottom: 26px
+}
+
+/* prova rápida e barra fixa não existem no desktop */
+.hero__prova,
+.cta-fixa {
+  display: none
+}
+
+@media (max-width: 900px) {
+
+  /* foto menor: rosto + caneca, fade pro fundo escuro */
+  .hero--otimizada .hero__bg {
+    position: relative;
+    aspect-ratio: auto;
+    height: clamp(200px, 64vw, 320px);
+    max-height: 40vh;
+    background-size: 100% auto;
+    background-position: top center
+  }
+
+  .hero--otimizada .hero__bg::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 45%;
+    background: linear-gradient(180deg, rgba(1, 1, 6, 0) 0%, #010106 100%)
+  }
+
+  /* logo no canto superior esquerdo, sobre a foto */
+  .hero--otimizada .hero__topbar {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: auto;
+    margin: 0;
+    padding: 0 14px;
+    justify-content: flex-start
+  }
+
+  .hero--otimizada .hero__brand img {
+    width: 64px;
+    height: 64px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .6))
+  }
+
+  /* texto sobe e invade o fade da foto */
+  .hero--otimizada .hero__content {
+    margin-top: -30px;
+    padding: 0
+  }
+
+  .hero--otimizada .hero__title {
+    margin: 4px 0 10px;
+    font-size: clamp(1.55rem, 6.4vw, 2.2rem)
+  }
+
+  .hero--otimizada .hero__sub {
+    margin: 0 auto 16px;
+    font-size: .95rem
+  }
+
+  .hero--otimizada .hero__cta-wrap {
+    margin-bottom: 12px
+  }
+
+  /* prova rápida: 8h · 2 anos · garantia */
+  .hero--otimizada .hero__prova {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 10px;
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .64rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--muted)
+  }
+
+  .hero--otimizada .hero__prova li {
+    display: flex;
+    align-items: center;
+    gap: 6px
+  }
+
+  .hero--otimizada .hero__prova li::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3ed68a;
+    box-shadow: 0 0 8px rgba(62, 214, 138, .8)
+  }
+
+  .hero--otimizada .hero__pay {
+    margin-bottom: 20px
+  }
+
+
+  /* formas de pagamento (cartão · pix) só no desktop */
+  .hero--otimizada .hero__pay {
+    display: none
+  }
+
+  /* pilares só no desktop */
+  .hero--otimizada .hero__pillars {
+    display: none
+  }
+
+  /* fecha o hero mais justo, sem faixa preta vazia embaixo */
+  .hero--otimizada {
+    padding-bottom: 28px
+  }
+
+  /* a seção seguinte começa mais perto: sem faixa clara vazia no fim da primeira tela */
+  .lp-otimizada .problema {
+    padding-top: 56px
+  }
+
+  /* barra fixa de CTA no rodapé do celular */
+  .cta-fixa {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(6, 13, 26, .94);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line-strong);
+    transform: translateY(110%);
+    transition: transform .3s ease
+  }
+
+  .cta-fixa.is-visible {
+    transform: translateY(0)
+  }
+
+  .cta-fixa .cta {
+    width: 100%;
+    padding: .85rem 1rem;
+    font-size: .92rem
+  }
+
+  .cta-fixa__hint {
+    display: block;
+    margin-top: 6px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .62rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted-2)
+  }
+
+  /* espaço pra barra não cobrir o rodapé */
+  body.tem-cta-fixa {
+    padding-bottom: 96px
+  }
+}

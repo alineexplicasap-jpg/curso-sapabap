@@ -1,4 +1,4 @@
-# CLAUDE.md — Projeto SAP ABAP (Aline Explica SAP)
+| Interatividade | `<details>`/`<summary>` nativo (FAQ) + `cta-fixa.js` (barra fixa de CTA no mobile) + 1 script vanilla `scroll-reveal.js`# CLAUDE.md — Projeto SAP ABAP (Aline Explica SAP)
 
 Este arquivo orienta o Claude Code ao trabalhar neste repositório. Leia antes de qualquer ação.
 
@@ -67,7 +67,9 @@ Landing page do **Curso Prático SAP ABAP** ministrado pela Aline (marca "Aline 
 
 ```
 sapabap/
-├── index.html              → página completa, todas as 12 seções em HTML estático
+├── index.html              → página completa, 12 seções. Hero "otimizada" (mobile: CTA na 1ª tela, logo no canto, sem pilares/pagamento, barra fixa de CTA)
+├── lp-hero-old/            → home anterior (hero antiga), noindex, só para comparação
+├── cta-fixa.js             → script vanilla: mostra a barra fixa de CTA (.cta-fixa) depois de 2 telas de rolagem no mobile
 ├── styles.css              → todo o CSS (tokens em :root, BEM-ish por seção, media queries no fim, animações scroll-reveal no fim do arquivo)
 ├── scroll-reveal.js        → script vanilla (~25 linhas) que adiciona .is-visible em [data-reveal] quando entram no viewport
 ├── tracking.js             → rastreamento Meta (Framework FOP): eventos do funil, UTM persistida, envio ao CAPI
@@ -147,7 +149,7 @@ Classes utilitárias: `.cta` (+ `.green`, `.gold`), `.chip`, `.eyebrow` (+ `.gol
 </script>
 ```
 
-> Páginas já com o script: `index.html`, `obrigado-sapabap.html`. Backups (`*-backup*.html`) não precisam, pois não fazem parte do site no ar.
+> Páginas já com o script: `index.html`, `lp-hero-old/index.html`, `obrigado-sapabap.html`. Backups (`*-backup*.html`) não precisam, pois não fazem parte do site no ar.
 
 ---
 
