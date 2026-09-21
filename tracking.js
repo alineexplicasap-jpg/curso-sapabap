@@ -16,7 +16,8 @@
 
    Todo evento leva: event_id unico (espelhado no CAPI para deduplicacao),
    fonte da visita (meta, instagram, google, direto...) e, quando ha UTM,
-   campanha e anuncio. Eventos do funil vao so para AES_TRACK.pixel; os
+   campanha e anuncio. Para a Hotmart vao src, sck, xcod e fbclid.
+   Eventos do funil vao so para AES_TRACK.pixel; os
    pixels em AES_TRACK.pixelsExtra recebem apenas o PageView.
    ========================================================================== */
 (function () {
@@ -249,7 +250,7 @@
 
   /* ---------- 8. cliques: oferta e checkout ------------------------------ */
 
-  /* repassa a origem para a Hotmart (src = fonte, sck = campanha~anuncio~uid) */
+  /* repassa a origem para a Hotmart (src = fonte, sck = campanha~anuncio, xcod = uid) */
   function comRastreio(url) {
     try {
       var u = new URL(url, location.href);
@@ -257,10 +258,14 @@
       /* fbclid junto: se o checkout capturar, o Purchase sai com fbc e a
          ligacao compra -> clique no anuncio fica mais forte */
       if (origem.fbclid && !u.searchParams.get('fbclid')) u.searchParams.set('fbclid', origem.fbclid);
+      /* sck = campanha~anuncio (relatorios da Hotmart) */
       if (!u.searchParams.get('sck')) {
-        var sck = [origem.utm_campaign, origem.utm_content, UID].filter(Boolean).join('~');
-        u.searchParams.set('sck', limpa(sck).slice(0, 100));
+        var sck = [origem.utm_campaign, origem.utm_content].filter(Boolean).join('~');
+        if (sck) u.searchParams.set('sck', limpa(sck).slice(0, 100));
       }
+      /* xcod = id do visitante: a Hotmart devolve no webhook/postback, o que
+         permite reconciliar cada venda com a jornada registrada pelo funil */
+      if (!u.searchParams.get('xcod')) u.searchParams.set('xcod', UID);
       return u.toString();
     } catch (e) { return url; }
   }

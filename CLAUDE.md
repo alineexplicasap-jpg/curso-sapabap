@@ -184,7 +184,8 @@ Regras ao mexer nisso:
   `event_id` a cada mudança de hash. Não religar.
 - Links `#âncora` rolam via `scrollIntoView` sem mudar a URL (mesmo motivo).
 - Todo evento leva `fonte` (meta, instagram, google, direto...) e, com UTM,
-  `campanha` e `anuncio`. A mesma origem vai para a Hotmart em `src`/`sck`.
+  `campanha` e `anuncio`. Para a Hotmart vão `src` (fonte), `sck` (campanha~anuncio),
+  `xcod` (id do visitante, devolvido no webhook) e `fbclid`.
 - Ao criar página nova com oferta: copiar o bloco do `<head>`, ajustar
   `content`, e manter `<script src="tracking.js">` **sem defer** (caminho relativo).
 - O token do CAPI **nunca** entra no repositório — é secret do Worker.
