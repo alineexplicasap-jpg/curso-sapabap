@@ -1,75 +1,24 @@
-# Prompt para o agente do Chrome (tela do Cloudflare)
+# Prompts para o agente do Chrome — Cloudflare
 
-Copie **tudo que está dentro do bloco abaixo** e cole no plugin, com o
-dashboard do Cloudflare já aberto e logado.
+## A) Atualizar o código do Worker (use este quando o capi.js mudar)
 
-> **Não coloque o token do Meta neste prompt.** O agente vai criar o campo
-> `CAPI_TOKEN` como *Secret* e parar para você digitar o valor. Token colado em
-> prompt fica salvo no histórico da extensão.
-
----
+Tela: dash.cloudflare.com, logado. O código embutido abaixo é o `worker/capi.js`
+atual do repositório — se editar o arquivo, regenere este prompt.
 
 ```
-Você está no dashboard do Cloudflare (dash.cloudflare.com), já logado. Preciso que você
-crie e publique um Worker. Siga na ordem e me diga o resultado de cada etapa.
-
-CONTEXTO: este Worker recebe eventos do meu site e reenvia ao Meta (Conversions API).
-Ele é o servidor de rastreamento das minhas campanhas.
-
-ETAPA 1 — Criar o Worker
-1. No menu lateral, abra "Compute (Workers)" ou "Workers & Pages" (o nome varia).
-2. Clique em "Create" / "Create Worker" / "Create application" e escolha começar do
-   template "Hello World" (Worker simples, NÃO Pages, NÃO template com banco).
-3. No nome do Worker, digite exatamente: capi-aline
-4. Clique em "Deploy" para criar. Ignore a URL por enquanto.
-
-ETAPA 2 — Colar o código
-5. Clique em "Edit code" (ou "Continue to project" e depois "Edit code").
-6. No editor, abra o arquivo principal (worker.js ou index.js).
-7. Apague TODO o conteúdo existente do arquivo.
-8. Cole exatamente o código que está no final destas instruções, entre as marcas
-   ===INICIO DO CODIGO=== e ===FIM DO CODIGO=== (não copie as marcas).
-9. Clique em "Deploy" / "Save and Deploy" e confirme.
-10. Me diga se apareceu algum erro de sintaxe.
-
-ETAPA 3 — Variáveis de ambiente
-11. Volte para o Worker (botão de voltar / nome "capi-aline" no topo).
-12. Abra "Settings" e depois "Variables and Secrets" (pode aparecer como
-    "Variables" ou "Environment variables").
-13. Adicione estas TRÊS variáveis do tipo texto (Text / Plaintext), uma por vez,
-    clicando em "Add variable" e depois em "Deploy"/"Save" no final:
-
-    Nome: PIXEL_ID
-    Valor: 564676471958688
-
-    Nome: GRAPH_VERSION
-    Valor: v21.0
-
-    Nome: ALLOWED_ORIGINS
-    Valor: https://lp.alineexplicasap.com.br,https://alineexplicasap.com.br,https://www.alineexplicasap.com.br,http://localhost:1922
-
-14. Agora adicione uma QUARTA variável, mas do tipo SECRET (marque a opção
-    "Secret" / "Encrypt"):
-
-    Nome: CAPI_TOKEN
-    Valor: PARE AQUI. Não invente nem preencha este valor. Deixe o campo aberto,
-           me avise que chegou nesta etapa e espere eu digitar o token.
-
-15. Depois que eu digitar o token, clique em "Deploy" / "Save" para aplicar.
-
-ETAPA 4 — Me devolver a URL
-16. Volte para a página inicial do Worker e copie a URL pública dele, no formato
-    https://capi-aline.ALGUMACOISA.workers.dev
-17. Me mostre essa URL completa em texto, e confirme que o status do Worker está
-    como "Active" / "Deployed".
-
-REGRAS:
-- Não altere nenhuma outra configuração da conta Cloudflare.
-- Não apague nem edite outros Workers, domínios, DNS ou páginas.
-- Não crie banco de dados, KV, R2, filas ou qualquer recurso pago.
-- Se alguma tela estiver diferente do que descrevi, me descreva o que está vendo
-  em vez de tentar adivinhar o caminho.
-- Se pedir plano pago em algum momento, pare e me avise.
+No dashboard do Cloudflare:
+1. Abra Workers → Worker "capi-aline" → "Edit code".
+2. No editor, abra o arquivo principal (worker.js ou index.js), selecione TODO o
+   conteúdo e apague.
+3. Cole exatamente o código entre ===INICIO DO CODIGO=== e ===FIM DO CODIGO===
+   (sem as marcas). Se o editor tiver auto-indentação ou auto-fechamento de
+   aspas/chaves, desligue antes de colar.
+4. Clique em "Deploy" / "Save and Deploy". Me diga se apareceu erro de sintaxe e
+   qual é a nova versão ativa.
+5. Vá em Settings → Variables and Secrets e me LISTE os nomes das variáveis (só os
+   nomes). Devem existir: PIXEL_ID, GRAPH_VERSION, ALLOWED_ORIGINS, CAPI_TOKEN.
+   Se existir TEST_EVENT_CODE, me avise — não apague sem eu pedir.
+REGRAS: não altere variáveis, não crie recursos, não toque em outros Workers.
 
 ===INICIO DO CODIGO===
 /* ============================================================================
@@ -87,6 +36,11 @@ REGRAS:
      ALLOWED_ORIGINS  dominios autorizados, separados por virgula
      GRAPH_VERSION    versao da Graph API (opcional, padrao v21.0)
      TEST_EVENT_CODE  codigo de teste do Gerenciador de Eventos (opcional)
+
+   O que o Worker aceita no corpo (JSON, text/plain para evitar preflight):
+     event_name, event_id, event_time (segundos), event_source_url,
+     external_id, fbp, fbc, custom_data, utm,
+     em / ph (opcionais, CRUS — hasheados aqui; nunca logados)
    ========================================================================== */
 
 const EVENTOS_PERMITIDOS = new Set([
@@ -94,8 +48,15 @@ const EVENTOS_PERMITIDOS = new Set([
   'AddToCart', 'InitiateCheckout', 'Purchase', 'Lead', 'Contact'
 ]);
 
+/* eventos que devem levar value + currency */
+const EVENTOS_COM_VALOR = new Set([
+  'ViewContent', 'AddToWishlist', 'AddToCart', 'InitiateCheckout', 'Purchase', 'Lead'
+]);
+
+const TENTATIVAS = [0, 1000, 3000]; // ms de espera antes de cada tentativa
+
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const origem = request.headers.get('Origin') || '';
     const cors = montaCors(origem, env);
 
@@ -112,6 +73,7 @@ export default {
 
     const nome = String(corpo.event_name || '');
     if (!EVENTOS_PERMITIDOS.has(nome)) return json({ erro: 'evento nao permitido' }, 400, cors);
+    if (!corpo.event_id) return json({ erro: 'event_id obrigatorio' }, 400, cors);
 
     const evento = await montaEvento(corpo, request, nome);
     const versao = env.GRAPH_VERSION || 'v21.0';
@@ -120,37 +82,89 @@ export default {
     const carga = { data: [evento], access_token: env.CAPI_TOKEN };
     if (env.TEST_EVENT_CODE) carga.test_event_code = env.TEST_EVENT_CODE;
 
-    try {
-      const r = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(carga)
-      });
-      const resposta = await r.json();
-      return json({ ok: r.ok, event_name: nome, event_id: evento.event_id, meta: resposta }, r.ok ? 200 : 502, cors);
-    } catch (e) {
-      return json({ erro: 'falha ao falar com o Meta', detalhe: String(e) }, 502, cors);
+    /* 1a tentativa em linha: responde ao navegador com o resultado real.
+       Se falhar por rede ou 5xx do Meta, as demais rodam em segundo plano
+       (waitUntil) sem prender a resposta. */
+    const r1 = await enviaAoMeta(url, carga, nome, evento.event_id, 0);
+    if (r1.ok) {
+      return json({ ok: true, event_name: nome, event_id: evento.event_id, meta: r1.meta }, 200, cors);
     }
+    if (!r1.repetir) {
+      return json({ ok: false, event_name: nome, event_id: evento.event_id, meta: r1.meta }, 502, cors);
+    }
+    ctx.waitUntil((async () => {
+      for (let i = 1; i < TENTATIVAS.length; i++) {
+        await new Promise(ok => setTimeout(ok, TENTATIVAS[i]));
+        const r = await enviaAoMeta(url, carga, nome, evento.event_id, i);
+        if (r.ok || !r.repetir) return;
+      }
+    })());
+    return json({ ok: false, agendado: true, event_name: nome, event_id: evento.event_id }, 202, cors);
   }
 };
+
+/* ---------- envio ao Meta com log estruturado ---------------------------- */
+
+async function enviaAoMeta(url, carga, nome, eventId, tentativa) {
+  try {
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(carga)
+    });
+    const meta = await r.json().catch(() => ({}));
+    if (r.ok) return { ok: true, meta };
+
+    /* erro do Meta: loga fbtrace_id e corpo (sem user_data — nunca PII) */
+    const err = meta.error || {};
+    console.error(JSON.stringify({
+      capi: 'erro-graph', tentativa, event_name: nome, event_id: eventId,
+      status: r.status, fbtrace_id: err.fbtrace_id || null,
+      code: err.code || null, subcode: err.error_subcode || null,
+      message: err.message || null
+    }));
+    /* 4xx = token, pixel ou payload errado: repetir nao resolve */
+    return { ok: false, meta, repetir: r.status >= 500 };
+  } catch (e) {
+    console.error(JSON.stringify({
+      capi: 'erro-rede', tentativa, event_name: nome, event_id: eventId, message: String(e)
+    }));
+    return { ok: false, meta: { error: { message: String(e) } }, repetir: true };
+  }
+}
 
 /* ---------- montagem do evento ------------------------------------------ */
 
 async function montaEvento(corpo, request, nome) {
   const cf = request.cf || {};
 
+  /* CF-Connecting-IP = IP real do cliente (v4 ou v6, conforme a conexao que o
+     navegador abriu). Nunca o IP do Worker. */
   const user_data = {
     client_ip_address: request.headers.get('CF-Connecting-IP') || '',
     client_user_agent: request.headers.get('User-Agent') || ''
   };
 
   /* fbp e fbc vao CRUS — nunca hasheados */
-  if (corpo.fbp) user_data.fbp = corpo.fbp;
-  if (corpo.fbc) user_data.fbc = corpo.fbc;
+  if (corpo.fbp) user_data.fbp = String(corpo.fbp);
+  if (corpo.fbc) {
+    user_data.fbc = String(corpo.fbc);
+  } else {
+    /* fallback: fbclid na URL do evento */
+    const fbclid = fbclidDaUrl(corpo.event_source_url);
+    if (fbclid) user_data.fbc = 'fb.1.' + Date.now() + '.' + fbclid;
+  }
 
   /* external_id: hash do mesmo valor cru que o Pixel recebeu no init.
      Normalizacao identica dos dois lados, senao o hash nao casa. */
   if (corpo.external_id) user_data.external_id = [await sha256(normaliza(corpo.external_id))];
+
+  /* em / ph (opcionais): chegam crus por HTTPS, saem hasheados. Normalizacao
+     conforme o Meta: email trim+lowercase; telefone so digitos com DDI. */
+  const ems = lista(corpo.em).map(normaliza).filter(Boolean);
+  if (ems.length) user_data.em = await Promise.all(ems.map(sha256));
+  const phs = lista(corpo.ph).map(normalizaTelefone).filter(Boolean);
+  if (phs.length) user_data.ph = await Promise.all(phs.map(sha256));
 
   /* geo pelo IP (Cloudflare) — sinal extra de match, sem PII do usuario */
   if (cf.city) user_data.ct = [await sha256(normaliza(cf.city).replace(/[^a-z]/g, ''))];
@@ -160,14 +174,29 @@ async function montaEvento(corpo, request, nome) {
 
   const custom = Object.assign({}, corpo.custom_data || {});
   const utm = corpo.utm || {};
-  if (utm.utm_campaign) custom.campanha = utm.utm_campaign;
-  if (utm.utm_content) custom.anuncio = utm.utm_content;
+  if (utm.utm_campaign && !custom.campanha) custom.campanha = utm.utm_campaign;
+  if (utm.utm_content && !custom.anuncio) custom.anuncio = utm.utm_content;
+
+  /* value sempre NUMERO com ponto; currency sempre presente onde ha valor.
+     "R$ 197,00" vira 197; lixo vira ausente (nunca 0, null ou ""). */
+  if ('value' in custom) {
+    const v = paraNumero(custom.value);
+    if (v === null || v <= 0) delete custom.value; else custom.value = v;
+  }
+  if (EVENTOS_COM_VALOR.has(nome) && 'value' in custom && !custom.currency) custom.currency = 'BRL';
+  if (custom.currency) custom.currency = String(custom.currency).toUpperCase();
+
+  /* event_time em segundos; se vier em ms, corrige; fora da janela, usa agora */
+  let t = Number(corpo.event_time) || 0;
+  if (t > 1e12) t = Math.floor(t / 1000);
+  const agora = Math.floor(Date.now() / 1000);
+  if (!t || t > agora + 60 || t < agora - 7 * 86400) t = agora;
 
   return {
     event_name: nome,
-    event_id: corpo.event_id,
-    event_time: Number(corpo.event_time) || Math.floor(Date.now() / 1000),
-    event_source_url: corpo.event_source_url || '',
+    event_id: String(corpo.event_id),
+    event_time: t,
+    event_source_url: String(corpo.event_source_url || ''),
     action_source: 'website',
     user_data,
     custom_data: custom
@@ -176,9 +205,35 @@ async function montaEvento(corpo, request, nome) {
 
 /* ---------- utilidades --------------------------------------------------- */
 
+function lista(v) {
+  if (v == null || v === '') return [];
+  return Array.isArray(v) ? v.map(String) : [String(v)];
+}
+
 function normaliza(v) {
   return String(v).trim().toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    .normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+
+/* so digitos, com DDI. Numero brasileiro sem DDI (10 ou 11 digitos) ganha 55. */
+function normalizaTelefone(v) {
+  let d = String(v).replace(/[^0-9]/g, '');
+  if (!d) return '';
+  if ((d.length === 10 || d.length === 11) && !d.startsWith('55')) d = '55' + d;
+  return d.length >= 8 ? d : '';
+}
+
+function paraNumero(v) {
+  if (typeof v === 'number') return isFinite(v) ? v : null;
+  const s = String(v).replace(/[^0-9,.\-]/g, '');
+  if (!s) return null;
+  /* "1.397,00" -> 1397.00 ; "197,5" -> 197.5 ; "197.00" -> 197 */
+  const n = s.indexOf(',') > -1 ? parseFloat(s.replace(/\./g, '').replace(',', '.')) : parseFloat(s);
+  return isFinite(n) ? n : null;
+}
+
+function fbclidDaUrl(url) {
+  try { return new URL(String(url)).searchParams.get('fbclid') || ''; } catch (e) { return ''; }
 }
 
 async function sha256(texto) {
@@ -207,21 +262,16 @@ function json(dados, status, cors) {
 ===FIM DO CODIGO===
 ```
 
----
+## B) Criar o Worker do zero (só se ele não existir mais)
 
-## Depois que o agente devolver a URL
+Siga o prompt A a partir de um Worker novo chamado `capi-aline` (template
+"Hello World"), depois cadastre as variáveis:
 
-1. Abra `tracking.js` na raiz do projeto e cole a URL na linha 22:
+| Nome | Tipo | Valor |
+|---|---|---|
+| PIXEL_ID | texto | 564676471958688 |
+| GRAPH_VERSION | texto | v21.0 |
+| ALLOWED_ORIGINS | texto | https://lp.alineexplicasap.com.br,https://alineexplicasap.com.br,https://www.alineexplicasap.com.br,http://localhost:1922 |
+| CAPI_TOKEN | **Secret** | digitado por você, nunca pelo agente nem no prompt |
 
-   ```js
-   var ENDPOINT_CAPI = 'https://capi-aline.SEU-USUARIO.workers.dev';
-   ```
-
-2. Suba o site e teste pelo Gerenciador de Eventos → **Testar eventos**
-   (roteiro completo em `worker/README.md`).
-
-## Onde pegar o token do Meta (antes de começar)
-
-Gerenciador de Eventos → pixel **564676471958688** → Configurações →
-**Conversions API** → *Gerar token de acesso*. Deixe copiado antes de rodar o
-prompt, porque o agente vai parar esperando você colar.
+Depois cole a URL do Worker em `tracking.js` (`ENDPOINT_CAPI`).
