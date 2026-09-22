@@ -119,7 +119,51 @@
     return p;
   }
 
-  /* ---------- 3. Pixel: snippet oficial + init com Advanced Matching ------ */
+  /* ---------- 3. _fbp e _fbc first-party, ANTES do pixel ------------------ */
+
+  /* dominio raiz onde o cookie pega (lp.x.com.br -> x.com.br); vazio em localhost */
+  var DOMINIO = (function () {
+    var partes = location.hostname.split('.');
+    if (partes.length < 2 || /^[0-9.]+$/.test(location.hostname)) return '';
+    for (var i = partes.length - 2; i >= 0; i--) {
+      var cand = partes.slice(i).join('.');
+      document.cookie = '_aes_t=1;domain=' + cand + ';path=/;max-age=60;SameSite=Lax';
+      if (leCookie('_aes_t')) {
+        document.cookie = '_aes_t=;domain=' + cand + ';path=/;max-age=0';
+        return cand;
+      }
+    }
+    return '';
+  })();
+
+  function cookieRaiz(nome, valor, dias) {
+    document.cookie = nome + '=' + valor + (DOMINIO ? ';domain=' + DOMINIO : '') +
+      ';path=/;max-age=' + (dias * 86400) + ';SameSite=Lax';
+  }
+
+  /* _fbp: o fbevents.js so cria este cookie depois de carregar (async). O PageView
+     sai antes disso e ia ao servidor sem fbp. Gerando aqui, no formato oficial,
+     o Pixel reaproveita e client + server mandam o MESMO valor. */
+  var FBP = leCookie('_fbp');
+  if (!FBP) {
+    FBP = 'fb.1.' + Date.now() + '.' + String(Math.floor(Math.random() * 1e10)).padStart(10, '0');
+    cookieRaiz('_fbp', FBP, 90);
+  }
+
+  /* _fbc: com fbclid na URL, grava agora (o Pixel faria o mesmo); sem fbclid na
+     URL mas com um salvo, grava tambem — assim o Pixel do navegador manda fbc
+     em retornos diretos, nao so o servidor. */
+  var FBC = leCookie('_fbc');
+  var fbclidAgora = new URLSearchParams(location.search).get('fbclid');
+  if (fbclidAgora) {
+    FBC = 'fb.1.' + Date.now() + '.' + fbclidAgora;
+    cookieRaiz('_fbc', FBC, 90);
+  } else if (!FBC && origem.fbclid) {
+    FBC = 'fb.1.' + (origem.ts || Date.now()) + '.' + origem.fbclid;
+    cookieRaiz('_fbc', FBC, 90);
+  }
+
+  /* ---------- 4. Pixel: snippet oficial + init com Advanced Matching ------ */
 
   !function (f, b, e, v, n, t, s) {
     if (f.fbq) return; n = f.fbq = function () {
@@ -139,13 +183,39 @@
     fbq('init', id, { external_id: UID });
   });
 
-  /* ---------- 4. envio: Pixel + CAPI com o MESMO event_id ---------------- */
+  /* ---------- 5. envio: Pixel + CAPI com o MESMO event_id ---------------- */
 
-  function fbc() {
-    var c = leCookie('_fbc');
-    if (c) return c;
-    if (origem.fbclid) return 'fb.1.' + (origem.ts || Date.now()) + '.' + origem.fbclid;
-    return '';
+  /* Fila de eventos que nao chegaram ao Worker (rede, adblock, 5xx). Reenviada
+     no proximo carregamento. Itens com mais de 24h sao descartados: o Meta so
+     deduplica dentro de 48h, depois disso contaria em dobro. */
+  var FILA = '_aes_fila';
+  function lerFila() { try { return JSON.parse(localStorage.getItem(FILA) || '[]'); } catch (e) { return []; } }
+  function salvarFila(f) { try { localStorage.setItem(FILA, JSON.stringify(f.slice(-20))); } catch (e) { } }
+
+  function postar(corpo) {
+    /* text/plain evita preflight CORS. keepalive: sobrevive a navegacao. */
+    return fetch(CAPI, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body: JSON.stringify(corpo),
+      keepalive: true,
+      mode: 'cors'
+    }).then(function (r) {
+      /* 4xx = erro nosso (origem, payload): nao adianta repetir */
+      if (r.status >= 500) throw new Error('capi ' + r.status);
+      return true;
+    });
+  }
+
+  function enviaComRetry(corpo, tentativa) {
+    return postar(corpo)['catch'](function () {
+      if (tentativa < 1) {
+        return new Promise(function (ok) { setTimeout(ok, 1500); })
+          .then(function () { return enviaComRetry(corpo, tentativa + 1); });
+      }
+      var f = lerFila(); f.push(corpo); salvarFila(f);
+      return false;
+    });
   }
 
   function paraCapi(nome, params, id) {
@@ -156,27 +226,30 @@
       event_time: Math.floor(Date.now() / 1000),
       event_source_url: location.href,
       external_id: UID,
-      fbp: leCookie('_fbp'),
-      fbc: fbc(),
+      fbp: FBP,
+      fbc: FBC || '',
       custom_data: params || {},
       utm: origem
     };
-    var texto = JSON.stringify(corpo);
-    /* text/plain evita preflight CORS — sendBeacon nao sobrevive a um preflight */
     try {
+      if (window.fetch) { enviaComRetry(corpo, 0); return; }
       if (navigator.sendBeacon) {
-        var ok = navigator.sendBeacon(CAPI, new Blob([texto], { type: 'text/plain;charset=UTF-8' }));
-        if (ok) return;
+        navigator.sendBeacon(CAPI, new Blob([JSON.stringify(corpo)], { type: 'text/plain;charset=UTF-8' }));
       }
-      fetch(CAPI, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: texto,
-        keepalive: true,
-        mode: 'cors'
-      })['catch'](function () { });
     } catch (e) { }
   }
+
+  /* reenvia o que ficou pendente da visita anterior */
+  (function () {
+    if (!CAPI || !window.fetch) return;
+    var pendentes = lerFila();
+    if (!pendentes.length) return;
+    salvarFila([]);
+    var limite = Math.floor(Date.now() / 1000) - 86400;
+    pendentes.forEach(function (c) {
+      if (c && c.event_time > limite) enviaComRetry(c, 1);
+    });
+  })();
 
   /* dispara em um pixel so (o do funil) */
   function dispara(nome, params) {
@@ -186,7 +259,7 @@
     return id;
   }
 
-  /* ---------- 5. PageView: em todos os pixels, imediato ------------------- */
+  /* ---------- 6. PageView: em todos os pixels, imediato ------------------- */
 
   (function () {
     var id = uuid();
@@ -195,7 +268,7 @@
     paraCapi('PageView', p, id);
   })();
 
-  /* ---------- 6. parametros de conteudo ---------------------------------- */
+  /* ---------- 7. parametros de conteudo ---------------------------------- */
 
   function conteudo() {
     var p = paramsOrigem();
@@ -208,7 +281,7 @@
     return p;
   }
 
-  /* ---------- 7. degraus por scroll / tempo ------------------------------ */
+  /* ---------- 8. degraus por scroll / tempo ------------------------------ */
 
   var feitos = {};
   function umaVez(nome, fn) {
@@ -248,7 +321,7 @@
     });
   }, { passive: true });
 
-  /* ---------- 8. cliques: oferta e checkout ------------------------------ */
+  /* ---------- 9. cliques: oferta e checkout ------------------------------ */
 
   /* repassa a origem para a Hotmart (src = fonte, sck = campanha~anuncio, xcod = uid) */
   function comRastreio(url) {
@@ -317,7 +390,7 @@
     }
   }, true);
 
-  /* ---------- 9. api publica (para eventos manuais, se precisar) ---------- */
+  /* ---------- 10. api publica (para eventos manuais, se precisar) ---------- */
 
   window.aesTrack = dispara;
 
