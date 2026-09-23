@@ -12,6 +12,8 @@
      3 AddToWishlist    50% de scroll ou 30s
      4 AddToCart        clique em CTA que leva a oferta
      5 InitiateCheckout clique no botao do checkout Hotmart
+     - Rolagem        marcos de 20/40/60/70/80/90/100% (evento personalizado,
+                      um so nome, com o percentual em custom_data.percentual)
      6 Purchase         Hotmart (integracao nativa server-side) — nao vive aqui
 
    Todo evento leva: event_id unico (espelhado no CAPI para deduplicacao),
@@ -259,6 +261,18 @@
     return id;
   }
 
+  /* evento personalizado (nao existe padrao do Meta equivalente).
+     Por padrao vai so pelo navegador: rolagem nao e conversao, nao precisa da
+     resiliencia do servidor, e evita 7 chamadas extras ao Worker por visita.
+     Para espelhar no CAPI, troque ROLAGEM_NO_CAPI para true. */
+  var ROLAGEM_NO_CAPI = false;
+  function disparaCustom(nome, params) {
+    var id = uuid();
+    fbq('trackSingleCustom', PIXEL, nome, params || {}, { eventID: id });
+    if (ROLAGEM_NO_CAPI) paraCapi(nome, params, id);
+    return id;
+  }
+
   /* ---------- 6. PageView: em todos os pixels, imediato ------------------- */
 
   (function () {
@@ -272,6 +286,7 @@
 
   function conteudo() {
     var p = paramsOrigem();
+    if (maiorMarco) p.rolagem = maiorMarco;   /* quanto leu ate aqui */
     p.content_name = C.name;
     p.content_category = C.category;
     p.content_type = 'product';
@@ -304,22 +319,61 @@
   function percentualLido() {
     var raiz = document.documentElement;
     var altura = Math.max(document.body.scrollHeight, raiz.scrollHeight) - window.innerHeight;
-    if (altura <= 0) return 100;
-    return ((window.pageYOffset || raiz.scrollTop) / altura) * 100;
+    if (altura <= 0) return 100;                       /* cabe na tela: leu tudo */
+    var pct = ((window.pageYOffset || raiz.scrollTop) / altura) * 100;
+    return Math.max(0, Math.min(100, Math.round(pct)));
+  }
+
+  /* Marcos de profundidade de leitura. Um unico evento "Rolagem" com o
+     percentual como parametro, em vez de 7 eventos distintos: o Meta so
+     prioriza 8 eventos por dominio (usuarios iOS), e esses lugares tem que
+     sobrar para Purchase e InitiateCheckout. Publico por faixa sai filtrando
+     o parametro percentual. */
+  var MARCOS = [20, 40, 60, 70, 80, 90, 100];
+  var maiorMarco = 0;
+
+  function marcaRolagem(pct) {
+    for (var i = 0; i < MARCOS.length; i++) {
+      var m = MARCOS[i];
+      if (pct < m) break;
+      umaVez('rolagem' + m, function (marco) {
+        return function () {
+          maiorMarco = marco;
+          var p = paramsOrigem();
+          p.percentual = marco;
+          p.content_name = C.name;
+          p.content_category = C.category;
+          disparaCustom('Rolagem', p);
+        };
+      }(m));
+    }
   }
 
   var agendado = false;
+  function verificaScroll() {
+    var pct = percentualLido();
+    marcaRolagem(pct);                 /* antes dos degraus: assim ViewContent
+                                          e os demais ja saem com o marco atual */
+    DEGRAUS.forEach(function (d) {
+      if (pct >= d.scroll) umaVez(d.nome, function () { dispara(d.nome, conteudo()); });
+    });
+  }
+
   window.addEventListener('scroll', function () {
     if (agendado) return;
     agendado = true;
     requestAnimationFrame(function () {
       agendado = false;
-      var pct = percentualLido();
-      DEGRAUS.forEach(function (d) {
-        if (pct >= d.scroll) umaVez(d.nome, function () { dispara(d.nome, conteudo()); });
-      });
+      verificaScroll();
     });
   }, { passive: true });
+
+  /* pagina curta (sem barra de rolagem): a pessoa ja viu tudo */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { setTimeout(verificaScroll, 1200); });
+  } else {
+    setTimeout(verificaScroll, 1200);
+  }
 
   /* ---------- 9. cliques: oferta e checkout ------------------------------ */
 

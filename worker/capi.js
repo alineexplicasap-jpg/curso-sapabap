@@ -22,7 +22,7 @@
 
 const EVENTOS_PERMITIDOS = new Set([
   'PageView', 'ViewContent', 'AddToWishlist',
-  'AddToCart', 'InitiateCheckout', 'Purchase', 'Lead', 'Contact'
+  'AddToCart', 'InitiateCheckout', 'Purchase', 'Lead', 'Contact', 'Rolagem'
 ]);
 
 /* eventos que devem levar value + currency */

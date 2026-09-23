@@ -171,6 +171,7 @@ só o PageView.
 | 4 | AddToCart | clique em CTA que leva à oferta (`#preco` / `#oferta`) ou, se pulou a oferta, no próprio clique de checkout (barra fixa) |
 | 5 | InitiateCheckout | clique em link `pay.hotmart.com` |
 | 6 | Purchase | **integração nativa Hotmart → Meta**, nunca na página de obrigado |
+| — | Rolagem | marcos de 20/40/60/70/80/90/100% — evento personalizado, **um só nome**, com o marco em `custom_data.percentual` |
 
 Regras ao mexer nisso:
 
@@ -183,6 +184,15 @@ Regras ao mexer nisso:
   configuração automática gera `SubscribedButtonClick` e um PageView extra sem
   `event_id` a cada mudança de hash. Não religar.
 - Links `#âncora` rolam via `scrollIntoView` sem mudar a URL (mesmo motivo).
+- **Rolagem é um evento só, com o percentual como parâmetro.** Não criar
+  `Rolagem20`, `Rolagem40`…: o Meta prioriza no máximo 8 eventos por domínio
+  (usuários iOS), e esses lugares têm que sobrar para `Purchase` e
+  `InitiateCheckout`. Público por faixa sai filtrando `percentual`.
+- Rolagem vai **só pelo navegador** (`ROLAGEM_NO_CAPI = false` em `tracking.js`):
+  não é conversão, não precisa da resiliência do servidor, e evita 7 chamadas
+  extras ao Worker por visita.
+- Os eventos padrão levam `rolagem` = maior marco atingido até ali, então dá
+  para ver quanto a pessoa leu antes de clicar em comprar.
 - Todo evento leva `fonte` (meta, instagram, google, direto...) e, com UTM,
   `campanha` e `anuncio`. Para a Hotmart vão `src` (fonte), `sck` (campanha~anuncio),
   `xcod` (id do visitante, devolvido no webhook) e `fbclid`.
