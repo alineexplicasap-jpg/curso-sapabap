@@ -2331,48 +2331,6 @@ section {
   }
 }
 
-/* =========================
-   SCROLL REVEAL — animações sutis
-   Aplicadas via [data-reveal]; ativadas por scroll-reveal.js (IntersectionObserver)
-   ========================= */
-
-/* estado inicial — invisível e ligeiramente deslocado */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity .7s cubic-bezier(.2, .7, .2, 1),
-    transform .7s cubic-bezier(.2, .7, .2, 1);
-  will-change: opacity, transform;
-}
-
-[data-reveal="left"]  { transform: translateX(-28px); }
-[data-reveal="right"] { transform: translateX(28px); }
-[data-reveal="scale"] { transform: scale(.92); }
-[data-reveal="up-sm"] { transform: translateY(14px); transition-duration: .55s; }
-
-/* estado revelado */
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* stagger — atraso sequencial em filhos diretos de [data-reveal-group] */
-[data-reveal-group] > :nth-child(1)[data-reveal] { transition-delay: 0ms; }
-[data-reveal-group] > :nth-child(2)[data-reveal] { transition-delay: 90ms; }
-[data-reveal-group] > :nth-child(3)[data-reveal] { transition-delay: 180ms; }
-[data-reveal-group] > :nth-child(4)[data-reveal] { transition-delay: 270ms; }
-[data-reveal-group] > :nth-child(5)[data-reveal] { transition-delay: 360ms; }
-[data-reveal-group] > :nth-child(6)[data-reveal] { transition-delay: 450ms; }
-
-/* acessibilidade — respeita "reduce motion" do sistema */
-@media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-}
-
 /* ============================================================
    VARIANTE /lp-otimizada — CTA na primeira tela do celular
    Escopo: só .hero--otimizada, .hero__prova e .cta-fixa.

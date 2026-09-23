@@ -53,7 +53,7 @@ Landing page do **Curso Prático SAP ABAP** ministrado pela Aline (marca "Aline 
 |---|---|
 | Marcação | HTML5 estático puro |
 | Estilização | CSS3 externo em `styles.css` (variáveis CSS, grid, flex, media queries) |
-| Interatividade | `<details>`/`<summary>` nativo (FAQ) + `cta-fixa.js` (barra fixa de CTA no mobile, ~18 linhas) + 1 script vanilla `scroll-reveal.js` (~25 linhas) com IntersectionObserver para animar elementos `[data-reveal]` ao entrar no viewport |
+| Interatividade | `<details>`/`<summary>` nativo (FAQ) + `cta-fixa.js` (barra fixa de CTA no mobile, ~18 linhas). **Sem animação de entrada por scroll** — removida em 23/09/2026: 48 blocos nasciam com `opacity:0` e só apareciam via JS, o que deixava a captura do Clarity em branco e a página dependente de JS para ser lida |
 | Tipografia | Google Fonts — Plus Jakarta Sans (display) + JetBrains Mono (monospace) |
 | Ícones | SVG inline no HTML |
 | Build | **Sem build step.** É HTML/CSS + 1 JS vanilla. |
@@ -71,8 +71,7 @@ sapabap/
 │                            A hero anterior viveu em lp-hero-old/ até 23/09/2026; removida porque duplicava
 │                            Clarity e pixel, sujando heatmaps e eventos. Está no git em 5211789.
 ├── cta-fixa.js             → script vanilla: mostra a barra fixa de CTA (.cta-fixa) depois de 2 telas de rolagem no mobile
-├── styles.css              → todo o CSS (tokens em :root, BEM-ish por seção, media queries no fim, animações scroll-reveal no fim do arquivo)
-├── scroll-reveal.js        → script vanilla (~25 linhas) que adiciona .is-visible em [data-reveal] quando entram no viewport
+├── styles.css              → todo o CSS (tokens em :root, BEM-ish por seção, media queries no fim)
 ├── tracking.js             → rastreamento Meta (Framework FOP): eventos do funil, UTM persistida, envio ao CAPI
 ├── worker/                 → Cloudflare Worker do CAPI (capi.js, wrangler.toml, README com o passo a passo)
 ├── assets/                 → imagens usadas em produção (hero bg, logo, fotos da Aline)
@@ -212,6 +211,7 @@ Publicação e teste do Worker: ver `worker/README.md`.
 - ❌ Não converter para TypeScript.
 - ❌ Não adicionar `package.json` / `node_modules`.
 - ❌ Não inventar JavaScript próprio — se for necessário interatividade, prefira primeiro a solução em CSS ou HTML nativo (`<details>`, `:target`, `:checked` hack, etc.).
+- ❌ Não reintroduzir animação de entrada que esconda conteúdo por padrão (`opacity:0` até o scroll). Conteúdo tem que existir sem JS; o Clarity monta o heatmap sobre uma captura do DOM e fica em branco se os blocos nascem invisíveis.
 - ❌ Não tocar conteúdo dentro de `research/` ou `uploads/` (são referências, não produção).
 - ❌ Não consultar nada fora desta pasta sem avisar primeiro (ver REGRA CRÍTICA acima).
 
