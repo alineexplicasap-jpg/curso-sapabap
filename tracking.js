@@ -377,7 +377,7 @@
 
   /* ---------- 9. cliques: oferta e checkout ------------------------------ */
 
-  /* repassa a origem para a Hotmart (src = fonte, sck = campanha~anuncio, xcod = uid) */
+  /* repassa a origem para a Hotmart (src = fonte, sck = campanha~anuncio, xcod = uid, utm_* inteiros) */
   function comRastreio(url) {
     try {
       var u = new URL(url, location.href);
@@ -393,6 +393,12 @@
       /* xcod = id do visitante: a Hotmart devolve no webhook/postback, o que
          permite reconciliar cada venda com a jornada registrada pelo funil */
       if (!u.searchParams.get('xcod')) u.searchParams.set('xcod', UID);
+      /* utm_* originais, inteiros: a Hotmart le direto da URL do checkout e
+         mostra no relatorio de vendas. Vem da origem salva (ultimo clique em
+         anuncio), entao acompanha a pessoa mesmo em retorno direto. */
+      CHAVES_UTM.forEach(function (k) {
+        if (origem[k] && !u.searchParams.get(k)) u.searchParams.set(k, origem[k]);
+      });
       return u.toString();
     } catch (e) { return url; }
   }

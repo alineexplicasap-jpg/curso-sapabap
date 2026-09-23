@@ -195,7 +195,7 @@ Regras ao mexer nisso:
   para ver quanto a pessoa leu antes de clicar em comprar.
 - Todo evento leva `fonte` (meta, instagram, google, direto...) e, com UTM,
   `campanha` e `anuncio`. Para a Hotmart vão `src` (fonte), `sck` (campanha~anuncio),
-  `xcod` (id do visitante, devolvido no webhook) e `fbclid`.
+  `xcod` (id do visitante, devolvido no webhook), `fbclid` e os `utm_*` inteiros.
 - Ao criar página nova com oferta: copiar o bloco do `<head>`, ajustar
   `content`, e manter `<script src="tracking.js">` **sem defer** (caminho relativo).
 - O token do CAPI **nunca** entra no repositório — é secret do Worker.
