@@ -70,6 +70,10 @@ sapabap/
 ├── index.html              → página completa, 12 seções. Hero "otimizada" (mobile: CTA na 1ª tela, logo no canto, sem pilares/pagamento, barra fixa de CTA)
 │                            A hero anterior viveu em lp-hero-old/ até 23/09/2026; removida porque duplicava
 │                            Clarity e pixel, sujando heatmaps e eventos. Está no git em 5211789.
+├── obrigado-sapabap.html   → página de obrigado (só PageView; Purchase vem da Hotmart)
+├── up-abap-ia.html         → upsell pós-compra "SAP ABAP + IA" (R$ 297). Vídeo no topo, contador de 3 min,
+│                            oferta reaproveita as classes .preco__*. Checkout Hotmart M107397403U. noindex.
+├── contador.js             → contador regressivo da página de upsell (3 min, início salvo no navegador)
 ├── cta-fixa.js             → script vanilla: mostra a barra fixa de CTA (.cta-fixa) depois de 2 telas de rolagem no mobile
 ├── styles.css              → todo o CSS (tokens em :root, BEM-ish por seção, media queries no fim)
 ├── tracking.js             → rastreamento Meta (Framework FOP): eventos do funil, UTM persistida, envio ao CAPI
@@ -149,7 +153,7 @@ Classes utilitárias: `.cta` (+ `.green`, `.gold`), `.chip`, `.eyebrow` (+ `.gol
 </script>
 ```
 
-> Páginas já com o script: `index.html`, `obrigado-sapabap.html`. Backups (`*-backup*.html`) não precisam, pois não fazem parte do site no ar.
+> Páginas já com o script: `index.html`, `obrigado-sapabap.html`, `up-abap-ia.html`. Backups (`*-backup*.html`) não precisam, pois não fazem parte do site no ar.
 
 ---
 

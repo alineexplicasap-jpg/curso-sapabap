@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SAP ABAP + IA na prática — condição especial para alunos</title>
+
+  <!-- Página de upsell (pós-compra): não indexar -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="bingbot" content="noindex, nofollow">
+
+  <!-- Fontes self-hosted (mesmo padrão da landing) -->
+  <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x0e1hiz89c");
+  </script>
+
+  <!-- ===== Meta Pixel + FOP (Funil de Otimizacao de Pixel) =====
+       Mesmo tracking.js da landing (PageView, ViewContent, AddToWishlist,
+       Rolagem, AddToCart, InitiateCheckout + CAPI). Aqui so muda o conteudo:
+       o produto e o upsell SAP ABAP + IA (R$ 297). O Purchase continua vindo
+       da integracao nativa Hotmart -> Meta. -->
+  <script>
+    window.AES_TRACK = {
+      pixel: '564676471958688',                 /* recebe os eventos do funil */
+      pixelsExtra: ['940802978658042'],         /* recebem apenas o PageView */
+      content: {
+        name: 'SAP ABAP + IA na prática',
+        category: 'curso-sap-abap-ia',
+        id: 'sapabap-ia-upsell',
+        value: 297.00,
+        currency: 'BRL'
+      }
+    };
+  </script>
+  <script src="tracking.js"></script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=564676471958688&ev=PageView&noscript=1" alt="" />
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=940802978658042&ev=PageView&noscript=1" alt="" />
+  </noscript>
+  <!-- End Meta Pixel Code -->
+</head>
+
+<body class="tem-cta-fixa">
+
+  <!-- ========================== TOPO (vídeo + contador) ========================== -->
+  <section class="up-hero">
+    <div class="container">
+      <div class="up-hero__inner">
+
+        <div class="up-hero__alert">
+          <span class="up-hero__alert-big">🔥 OPORTUNIDADE ÚNICA!</span>
+          <span class="up-hero__alert-small">Sua matrícula foi confirmada… mas tenho uma condição especial para
+            você</span>
+        </div>
+
+        <div class="up-timer" data-contador>
+          <span class="up-timer__label">Esta condição expira em</span>
+          <span class="up-timer__clock mono" data-contador-tempo aria-live="polite">03:00</span>
+          <span class="up-timer__hint">minutos</span>
+        </div>
+
+        <h1 class="up-hero__title">
+          Você acabou de dar um passo em ABAP. <span class="accent">Agora aprenda ABAP + IA</span> em uma condição
+          exclusiva.
+        </h1>
+
+        <div class="up-video">
+          <iframe src="https://www.youtube-nocookie.com/embed/vURVJuCoOJE?rel=0&modestbranding=1"
+            title="SAP ABAP + IA na prática — assista antes de decidir" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+
+        <p class="up-hero__sub">
+          Você acabou de dar um importante passo para se aprofundar em SAP ABAP.
+          <strong>Agora imagine unir esse conhecimento com Inteligência Artificial.</strong>
+        </p>
+
+        <div class="up-hero__cta-wrap">
+          <a href="https://pay.hotmart.com/M107397403U?off=k8ph0mbv" target="_blank" rel="noopener noreferrer"
+            class="cta green up-hero__cta">
+            QUERO APRENDER SAP ABAP + IA
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+              <path d="M5 12h14M13 5l7 7-7 7" stroke="#012b14" stroke-width="2.2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </a>
+          <p class="cta-instant cta-instant--dark">De R$ 397 por R$ 297 à vista · só para quem já é aluno</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== NA PRÁTICA ========================== -->
+  <section class="up-pratica">
+    <div class="container">
+      <div class="up-pratica__head">
+        <span class="eyebrow dark">🤖 Aprenda SAP ABAP + IA na prática</span>
+        <h2 class="up-pratica__title">
+          Integre o SAP S/4HANA com Inteligência Artificial usando <span class="hl">ABAP e a API da OpenAI</span>
+        </h2>
+        <p class="up-pratica__sub">Você vai colocar a mão na massa para:</p>
+      </div>
+
+      <ul class="up-pratica__grid">
+        <li class="up-pratica__item"><span class="up-pratica__check"></span>Integrar SAP + OpenAI</li>
+        <li class="up-pratica__item"><span class="up-pratica__check"></span>Consumir APIs REST com ABAP</li>
+        <li class="up-pratica__item"><span class="up-pratica__check"></span>Trabalhar com JSON</li>
+        <li class="up-pratica__item"><span class="up-pratica__check"></span>Configurar SM59, STRUST e SSL</li>
+        <li class="up-pratica__item"><span class="up-pratica__check"></span>Criar classes ABAP para comunicação com
+          IA</li>
+        <li class="up-pratica__item"><span class="up-pratica__check"></span>Desenvolver agentes de IA</li>
+        <li class="up-pratica__item"><span class="up-pratica__check"></span>Criar um ChatGPT funcionando dentro do
+          SAP</li>
+        <li class="up-pratica__item"><span class="up-pratica__check"></span>Analisar códigos, erros e dumps com IA</li>
+        <li class="up-pratica__item"><span class="up-pratica__check"></span>Aplicar IA em documentação e
+          especificações funcionais</li>
+        <li class="up-pratica__item"><span class="up-pratica__check"></span>Desenvolver um projeto prático do início
+          ao fim</li>
+      </ul>
+
+      <div class="up-pratica__ambiente">
+        <svg viewBox="0 0 24 24" fill="none" width="26" height="26" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="12" rx="2" stroke="#1e40af" stroke-width="1.8" />
+          <path d="M8 20h8M12 16v4" stroke="#1e40af" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+        <p>E você ainda terá <strong>3 meses de acesso ao ambiente SAP S/4HANA</strong> para praticar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== FLUXO DO PROJETO ========================== -->
+  <section class="up-fluxo">
+    <div class="container">
+      <div class="up-fluxo__inner">
+        <span class="eyebrow gold">🎯 E tem mais…</span>
+        <h2 class="up-fluxo__title">Você não vai ficar apenas na teoria.</h2>
+        <p class="up-fluxo__sub">Seu projeto vai evoluir até uma integração como:</p>
+
+        <div class="up-fluxo__chain" aria-label="Usuário, SAP, ABAP, OpenAI, IA, SAP">
+          <span class="up-fluxo__node">USUÁRIO</span>
+          <span class="up-fluxo__arrow" aria-hidden="true">→</span>
+          <span class="up-fluxo__node">SAP</span>
+          <span class="up-fluxo__arrow" aria-hidden="true">→</span>
+          <span class="up-fluxo__node">ABAP</span>
+          <span class="up-fluxo__arrow" aria-hidden="true">→</span>
+          <span class="up-fluxo__node up-fluxo__node--ia">OPENAI</span>
+          <span class="up-fluxo__arrow" aria-hidden="true">→</span>
+          <span class="up-fluxo__node up-fluxo__node--ia">IA</span>
+          <span class="up-fluxo__arrow" aria-hidden="true">→</span>
+          <span class="up-fluxo__node">SAP</span>
+        </div>
+
+        <p class="up-fluxo__text">
+          Ou seja: você vai aprender a construir uma <strong>integração real entre SAP e Inteligência
+            Artificial</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== OFERTA ========================== -->
+  <section class="preco up-oferta" id="oferta">
+    <div class="preco__glow"></div>
+    <div class="container">
+      <div class="preco__head">
+        <div class="eyebrow gold">🎁 Condição especial para você</div>
+        <h2 class="preco__title">O investimento normal do curso é <span class="strike">R$ 397,00</span></h2>
+        <p class="preco__sub">Hoje, como você já é meu aluno:</p>
+      </div>
+
+      <div class="preco__card up-oferta__card">
+        <span class="preco__ribbon">ALUNO</span>
+        <h3 class="preco__cardtitle">Treinamento SAP ABAP + IA na prática</h3>
+        <span class="preco__note">ACESSO IMEDIATO + 3 MESES DE AMBIENTE S/4HANA</span>
+
+        <div class="preco__bigprice">
+          <span class="preco__bigpx">R$ 297</span>
+          <span class="preco__bigcents">,00</span>
+          <span class="preco__bigsuffix">à vista</span>
+        </div>
+        <div class="preco__alt">ou consulte a <span class="preco__altprice">opção parcelada</span> disponível no
+          checkout</div>
+
+        <ul class="preco__bullets">
+          <li class="preco__bullet"><svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+              <path d="M4 12.5l5 5 11-11" stroke="#3b82f6" stroke-width="2.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>Integração SAP S/4HANA + OpenAI com ABAP, do zero ao projeto pronto</li>
+          <li class="preco__bullet"><svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+              <path d="M4 12.5l5 5 11-11" stroke="#3b82f6" stroke-width="2.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>APIs REST, JSON, SM59, STRUST e SSL na prática</li>
+          <li class="preco__bullet"><svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+              <path d="M4 12.5l5 5 11-11" stroke="#3b82f6" stroke-width="2.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>Agentes de IA e um ChatGPT funcionando dentro do SAP</li>
+          <li class="preco__bullet"><svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+              <path d="M4 12.5l5 5 11-11" stroke="#3b82f6" stroke-width="2.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>IA analisando códigos, erros, dumps e especificações funcionais</li>
+          <li class="preco__bullet"><svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+              <path d="M4 12.5l5 5 11-11" stroke="#3b82f6" stroke-width="2.4" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>3 meses de acesso ao ambiente SAP S/4HANA para praticar</li>
+        </ul>
+
+        <a href="https://pay.hotmart.com/M107397403U?off=k8ph0mbv" target="_blank" rel="noopener noreferrer"
+          class="cta green preco__cta">
+          <svg viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+            <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" stroke="#012b14" stroke-width="1.8" stroke-linejoin="round" />
+          </svg>
+          ACESSE A CONDIÇÃO ESPECIAL
+        </a>
+        <p class="cta-instant cta-instant--dark">⚡ Aproveite enquanto esta condição de aluno estiver disponível</p>
+
+        <div class="preco__trust">
+          <span class="preco__trustitem"><svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+              <rect x="4" y="11" width="16" height="10" rx="2" stroke="#3b82f6" stroke-width="1.8" />
+              <path d="M8 11V8a4 4 0 018 0v3" stroke="#3b82f6" stroke-width="1.8" />
+            </svg> Compra única e segura</span>
+          <span class="preco__trustitem"><svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+              <circle cx="12" cy="12" r="9" stroke="#3b82f6" stroke-width="1.8" />
+              <path d="M12 7v5l3 2" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" />
+            </svg> Acesso imediato</span>
+          <span class="preco__trustitem"><svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+              <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z" stroke="#3b82f6" stroke-width="1.7"
+                stroke-linejoin="round" />
+              <path d="M9 12l2 2 4-4" stroke="#3b82f6" stroke-width="1.7" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg> Pagamento pela Hotmart</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer-bar">
+    <div class="container">
+      <div class="footer-bar__brand">ASDW TRAINNING LTDA</div>
+      <div>CNPJ 42.618.687/0001-73</div>
+      <div>Endereço: Avenida Paulista, 1636, Cj.4, Pv.15, SL1504/2081, Bela Vista</div>
+      <div class="footer-bar__copy">© 2026 Aline Explica SAP — Todos os direitos reservados</div>
+    </div>
+  </footer>
+  <div class="footer-stripe"></div>
+
+  <!-- barra fixa de CTA (só mobile, via CSS). Vai direto ao checkout: o tracking.js
+       dispara AddToCart + InitiateCheckout e repassa a origem (src/sck/fbclid) -->
+  <div class="cta-fixa">
+    <a href="https://pay.hotmart.com/M107397403U?off=k8ph0mbv" target="_blank" rel="noopener noreferrer"
+      class="cta green">
+      QUERO APRENDER SAP ABAP + IA
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" width="18" height="18">
+        <path d="M5 12h14M13 5l7 7-7 7" stroke="#012b14" stroke-width="2.2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </a>
+    <span class="cta-fixa__hint">Expira em <span class="mono" data-contador-tempo>03:00</span> · de R$ 397 por R$
+      297</span>
+  </div>
+  <script src="cta-fixa.js" defer></script>
+  <script src="contador.js" defer></script>
+</body>
+
+</html>

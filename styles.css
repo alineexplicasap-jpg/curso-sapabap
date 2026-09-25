@@ -2506,3 +2506,423 @@ section {
     padding-bottom: 96px
   }
 }
+
+/* =========================
+   PÁGINA UPSELL (/up-abap-ia)
+   Escopo: só .up-hero, .up-timer, .up-video, .up-pratica, .up-fluxo, .up-oferta.
+   A oferta reaproveita as classes .preco__* da landing.
+   ========================= */
+.up-hero {
+  position: relative;
+  background: linear-gradient(180deg, #060d1a 0%, #0a1530 70%, #0a1628 100%);
+  color: #fff;
+  padding: 48px 0 72px;
+  overflow: hidden
+}
+
+.up-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59, 130, 246, .22) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(244, 183, 64, .08) 0%, transparent 60%);
+  pointer-events: none
+}
+
+.up-hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center
+}
+
+/* chamada de atenção */
+.up-hero__alert {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px
+}
+
+.up-hero__alert-big {
+  display: inline-block;
+  padding: .55rem 1.3rem;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ffd166 0%, #d4901c 100%);
+  color: #1c0d00;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+  letter-spacing: .02em;
+  box-shadow: 0 0 0 1px rgba(255, 209, 102, .6), 0 12px 34px -8px rgba(244, 183, 64, .7);
+  animation: up-pulsa 1.6s ease-in-out infinite
+}
+
+@keyframes up-pulsa {
+
+  0%,
+  100% {
+    transform: scale(1)
+  }
+
+  50% {
+    transform: scale(1.04)
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .up-hero__alert-big {
+    animation: none
+  }
+}
+
+.up-hero__alert-small {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+  line-height: 1.5
+}
+
+/* contador regressivo */
+.up-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 138, 122, .5);
+  background: rgba(255, 138, 122, .1);
+  margin-bottom: 24px
+}
+
+.up-timer__label,
+.up-timer__hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .7rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .8)
+}
+
+.up-timer__clock {
+  font-weight: 800;
+  font-size: 1.7rem;
+  line-height: 1;
+  color: #ff8a7a;
+  font-variant-numeric: tabular-nums;
+  min-width: 4.2ch;
+  text-align: center
+}
+
+.up-timer.is-esgotado {
+  border-color: rgba(255, 255, 255, .25);
+  background: rgba(255, 255, 255, .06)
+}
+
+.up-timer.is-esgotado .up-timer__clock {
+  color: rgba(255, 255, 255, .6)
+}
+
+.up-hero__title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.7rem, 3.6vw, 2.9rem);
+  letter-spacing: -.025em;
+  line-height: 1.08;
+  margin: 0 0 26px
+}
+
+.up-hero__title .accent {
+  color: var(--gold-2)
+}
+
+.up-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid rgba(59, 130, 246, .45);
+  box-shadow: 0 30px 100px -20px rgba(59, 130, 246, .55);
+  margin: 0 auto 26px
+}
+
+.up-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0
+}
+
+.up-hero__sub {
+  font-size: 1.12rem;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 680px;
+  margin: 0 auto 28px
+}
+
+.up-hero__sub strong {
+  color: #fff
+}
+
+.up-hero__cta-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+
+.up-hero__cta {
+  padding: 1.15rem 2.4rem;
+  font-size: 1.06rem
+}
+
+/* --- na prática --- */
+.up-pratica {
+  background: #fff;
+  color: var(--ink);
+  padding: 96px 0
+}
+
+.up-pratica__head {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 44px
+}
+
+.up-pratica__title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.7rem, 3.2vw, 2.5rem);
+  letter-spacing: -.025em;
+  line-height: 1.1;
+  margin: 0 0 14px
+}
+
+.up-pratica__title .hl {
+  background: linear-gradient(180deg, transparent 60%, rgba(59, 130, 246, .25) 60%)
+}
+
+.up-pratica__sub {
+  font-size: 1.05rem;
+  color: #3a4561;
+  margin: 0
+}
+
+.up-pratica__grid {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 960px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px
+}
+
+.up-pratica__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(30, 64, 175, .14);
+  background: #f5f8ff;
+  font-weight: 600;
+  font-size: .98rem;
+  line-height: 1.35
+}
+
+.up-pratica__check {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #3ed68a 0%, #1ea562 100%);
+  position: relative
+}
+
+.up-pratica__check::after {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 5px;
+  width: 6px;
+  height: 11px;
+  border: solid #012b14;
+  border-width: 0 2.4px 2.4px 0;
+  transform: rotate(45deg)
+}
+
+.up-pratica__ambiente {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 960px;
+  margin: 22px auto 0;
+  padding: 20px 22px;
+  border-radius: 14px;
+  border: 1px dashed rgba(30, 64, 175, .35);
+  background: rgba(59, 130, 246, .06)
+}
+
+.up-pratica__ambiente svg {
+  flex: none
+}
+
+.up-pratica__ambiente p {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: #1c2540
+}
+
+/* --- fluxo do projeto --- */
+.up-fluxo {
+  background: #0a1530;
+  color: #fff;
+  padding: 96px 0
+}
+
+.up-fluxo__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center
+}
+
+.up-fluxo__title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.7rem, 3.2vw, 2.5rem);
+  letter-spacing: -.025em;
+  line-height: 1.1;
+  margin: 0 0 12px
+}
+
+.up-fluxo__sub {
+  font-size: 1.05rem;
+  color: var(--muted);
+  margin: 0 0 30px
+}
+
+.up-fluxo__chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 30px
+}
+
+.up-fluxo__node {
+  display: inline-flex;
+  align-items: center;
+  padding: .7rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, .45);
+  background: rgba(14, 42, 63, .55);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: .9rem;
+  letter-spacing: .08em
+}
+
+.up-fluxo__node--ia {
+  border-color: rgba(244, 183, 64, .55);
+  background: rgba(244, 183, 64, .12);
+  color: var(--gold-2)
+}
+
+.up-fluxo__arrow {
+  color: var(--cyan-glow);
+  font-size: 1.3rem;
+  line-height: 1
+}
+
+.up-fluxo__text {
+  font-size: 1.12rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0
+}
+
+.up-fluxo__text strong {
+  color: #fff
+}
+
+/* --- oferta: card único, centralizado --- */
+.up-oferta__card {
+  max-width: 560px;
+  margin: 0 auto
+}
+
+.up-oferta .preco__bigsuffix {
+  margin-left: 4px
+}
+
+.up-oferta .preco__title .strike {
+  white-space: nowrap
+}
+
+@media (max-width: 900px) {
+  .up-hero {
+    padding: 28px 0 56px
+  }
+
+  .up-hero__alert-small {
+    font-size: .64rem
+  }
+
+  .up-timer {
+    gap: 8px;
+    padding: 8px 14px
+  }
+
+  .up-timer__label,
+  .up-timer__hint {
+    font-size: .6rem
+  }
+
+  .up-timer__clock {
+    font-size: 1.4rem
+  }
+
+  .up-video {
+    border-radius: 12px
+  }
+
+  .up-hero__cta {
+    width: 100%
+  }
+
+  .up-pratica,
+  .up-fluxo {
+    padding: 64px 0
+  }
+}
+
+@media (max-width: 640px) {
+  .up-pratica__grid {
+    grid-template-columns: 1fr
+  }
+
+  .up-fluxo__chain {
+    gap: 8px
+  }
+
+  .up-fluxo__node {
+    padding: .55rem .8rem;
+    font-size: .78rem
+  }
+
+  .up-oferta.preco {
+    padding: 72px 0
+  }
+}
