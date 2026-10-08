@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/up-abap-ia", "destination": "/up-abap-ia.html" },
-    { "source": "/lp-v2-clara", "destination": "/lp-v2-clara.html" }
+    { "source": "/lp-v2-clara", "destination": "/lp-v2-clara.html" },
+    { "source": "/lp-v3", "destination": "/lp-v3.html" }
   ]
 }

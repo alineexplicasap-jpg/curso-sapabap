@@ -1,0 +1,41 @@
+/* =========================================================
+   LP v3 — camadas novas sobre o styles-v2-clara.css
+   (topo com vídeo, preço visível, nota do ambiente SAP, fundos alternados)
+   Não altera a LP atual nem a v2.
+   ========================================================= */
+
+/* ---------- fundos alternados na nova ordem das seções ---------- */
+.lp-v3 main > section:not(.hero) { background: var(--paper) }
+.lp-v3 main > section:not(.hero):nth-of-type(odd) { background: var(--paper-2) }
+.lp-v3 .jornada__title { text-wrap: balance }
+
+/* ---------- preço visível no topo ---------- */
+.hero3__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-bottom: 20px;
+  padding: 12px 18px;
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  background: rgba(251, 247, 238, .92)
+}
+.hero3__price strong { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; color: var(--ink) }
+.hero3__price span { font-size: .92rem; font-weight: 600; color: var(--ink-2) }
+
+/* ---------- nota do ambiente SAP (card de preço) ---------- */
+.preco__nota {
+  margin: -12px 0 22px;
+  font-size: .78rem;
+  line-height: 1.5;
+  color: var(--muted);
+  text-align: left
+}
+
+/* ---------- celular ---------- */
+@media (max-width: 900px) {
+  .hero3__price { margin: 0 auto 16px; justify-content: center; text-align: center }
+}
