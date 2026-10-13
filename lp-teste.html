@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Curso Prático SAP ABAP — Aline Explica SAP</title>
   <meta name="robots" content="noindex, nofollow" />
-  <!-- Roteador do teste de páginas (A/B/C). NÃO tem Pixel nem Clarity de propósito: ele só sorteia a versão e
-       redireciona. Quem registra PageView, eventos e sessões é a página de destino. Sem JavaScript, cai na LP atual. -->
-  <noscript><meta http-equiv="refresh" content="0;url=/" /></noscript>
+  <!-- Roteador do teste de páginas (A/B: v4 x v4 short). NÃO tem Pixel nem Clarity de propósito: ele só sorteia a versão e
+       redireciona. Quem registra PageView, eventos e sessões é a página de destino. Sem JavaScript, cai na v4. -->
+  <noscript><meta http-equiv="refresh" content="0;url=/lp-v4.html" /></noscript>
   <style>
     html, body { margin: 0; height: 100%; background: #f3ecdd; color: #3a3833; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif }
     body { display: grid; place-items: center }
@@ -20,9 +20,8 @@
   <p>Carregando…</p>
   <script>
     (function () {
-      /* ---- versões do teste (pesos iguais). Para tirar uma versão, apague a linha dela. ---- */
+      /* ---- versões do teste (pesos iguais; a LP atual ficou de fora de propósito). Para tirar uma versão, apague a linha dela. ---- */
       var VERSOES = [
-        { id: 'atual', caminho: '/', marca: 'lpatual' },
         { id: 'v4', caminho: '/lp-v4.html', marca: 'lpv4' },
         { id: 'v4short', caminho: '/lp-v4-short.html', marca: 'lpv4s' }
       ];
