@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conectando ao WhatsApp — Aline Explica SAP</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <noscript>
+    <style>.wp__btn { opacity: 1 !important; visibility: visible !important; transform: none !important } .wp__barra { display: none }</style>
+  </noscript>
+
+  <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('assets/fonts/plus-jakarta-sans-latin.woff2') format('woff2') }
+    @font-face { font-family: 'Playfair Display'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('assets/fonts/playfair-display-latin.woff2') format('woff2') }
+
+    :root { --paper: #f3ecdd; --card: #fbf7ee; --ink: #1a1917; --ink-2: #3a3833; --muted: #6b665b; --gold: #a98124; --gold-2: #c9a24a; --line: rgba(26, 25, 23, .13); --verde: #15803d; --verde-2: #25d366 }
+    * { box-sizing: border-box }
+    html, body { margin: 0; min-height: 100%; background: var(--paper) }
+    body {
+      min-height: 100vh; display: grid; place-items: center; padding: 24px;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased;
+      background: radial-gradient(900px 500px at 50% -10%, #fbf6ea 0%, transparent 70%), var(--paper)
+    }
+    .wp {
+      width: 100%; max-width: 520px; text-align: center; padding: 40px 32px 34px;
+      background: var(--card); border: 1px solid var(--line); border-radius: 24px;
+      box-shadow: 0 1px 2px rgba(60, 45, 15, .06), 0 18px 48px rgba(60, 45, 15, .12)
+    }
+    .wp__logo { width: 88px; height: 88px; object-fit: contain; margin: 0 auto 18px }
+    .wp__marca { margin: 0 0 22px; font-size: .72rem; font-weight: 700; letter-spacing: .32em; color: var(--muted) }
+    .wp__icone {
+      position: relative; display: grid; place-items: center; width: 76px; height: 76px; margin: 0 auto 22px;
+      border-radius: 50%; background: var(--verde-2); color: #fff
+    }
+    .wp__icone::before, .wp__icone::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--verde-2); animation: wp-onda 2s ease-out infinite }
+    .wp__icone::after { animation-delay: 1s }
+    .wp__icone svg { width: 40px; height: 40px; fill: currentColor }
+    @keyframes wp-onda { 0% { transform: scale(1); opacity: .6 } 100% { transform: scale(1.7); opacity: 0 } }
+    .wp__titulo { margin: 0 0 12px; font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: clamp(1.45rem, 5vw, 1.85rem); line-height: 1.2; letter-spacing: -.01em; text-wrap: balance }
+    .wp__sub { margin: 0 0 24px; font-size: .95rem; color: var(--ink-2) }
+    .wp__barra { height: 6px; margin: 0 auto 28px; max-width: 320px; border-radius: 999px; background: rgba(26, 25, 23, .1); overflow: hidden }
+    .wp__barra i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--gold-2), var(--verde-2)); animation: wp-carga 2s linear forwards }
+    @keyframes wp-carga { to { width: 100% } }
+    .wp__btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 1.05rem 1.2rem;
+      border-radius: 14px; background: var(--verde); color: #fff; text-decoration: none; font-weight: 800; font-size: .86rem; letter-spacing: .05em; line-height: 1.35; text-transform: uppercase;
+      box-shadow: 0 10px 24px rgba(21, 128, 61, .3);
+      opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity .35s ease, transform .35s ease, visibility .35s
+    }
+    .wp__btn svg { flex: none; width: 22px; height: 22px; fill: currentColor }
+    .wp__btn:hover { background: #166534 }
+    .wp__btn:focus-visible { outline: 3px solid var(--gold-2); outline-offset: 3px }
+    .wp.is-pronto .wp__btn { opacity: 1; visibility: visible; transform: none }
+    .wp.is-pronto .wp__barra { display: none }
+    .wp__nota { margin: 14px 0 0; min-height: 1.2em; font-size: .78rem; color: var(--muted) }
+    @media (prefers-reduced-motion: reduce) { .wp__icone::before, .wp__icone::after { animation: none } .wp__barra i { animation-duration: .01s } }
+  </style>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x0e1hiz89c");
+  </script>
+
+  <!-- Meta Pixel + CAPI (tracking.js). semFunil: esta página só registra PageView e o evento Contact,
+       sem os degraus de venda (ViewContent, AddToWishlist, Rolagem...). -->
+  <script>
+    window.AES_TRACK = {
+      pixel: '564676471958688',
+      pixelsExtra: ['940802978658042'],
+      semFunil: true,
+      content: { name: 'Contato WhatsApp', category: 'whatsapp', id: 'whatsapp-contato', value: 0, currency: 'BRL' }
+    };
+  </script>
+  <script src="tracking.js"></script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=564676471958688&ev=PageView&noscript=1" alt="" />
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=940802978658042&ev=PageView&noscript=1" alt="" />
+  </noscript>
+</head>
+
+<body>
+  <main class="wp" id="wp">
+    <img class="wp__logo" src="assets/logo-sap-abap.webp" alt="Curso Prático SAP ABAP" width="88" height="88">
+    <p class="wp__marca">ALINE EXPLICA SAP</p>
+
+    <div class="wp__icone" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" /></svg>
+    </div>
+
+    <h1 class="wp__titulo">Aguarde, estamos conectando você ao atendimento da Aline Explica SAP</h1>
+    <p class="wp__sub">Em instantes você será levado ao WhatsApp.</p>
+    <div class="wp__barra" aria-hidden="true"><i></i></div>
+
+    <a class="wp__btn" id="wp-btn" href="https://wa.me/5511937255106">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" /></svg>
+      <span>Caso não tenha iniciado a conversa, clique aqui</span>
+    </a>
+    <p class="wp__nota" id="wp-nota" aria-live="polite"></p>
+  </main>
+
+  <script>
+    (function () {
+      var NUMERO = '5511937255106';
+      var ESPERA = 2000;                                   /* ms até abrir o WhatsApp */
+      var CHAVE = 'aes_wpp_ts';                            /* evita refazer tudo se a pessoa voltar com "Voltar" */
+
+      function limpa(s) { return String(s || '').replace(/[^a-zA-Z0-9_.~-]/g, '-').slice(0, 60); }
+      function nomeDe(p) {                                 /* caminho da página -> nome curto (igual ao do wpp.js) */
+        p = String(p || '').replace(/^\/+/, '').replace(/\.html$/, '').replace(/\/+$/, '');
+        return p === '' || p === 'index' ? 'lp-atual' : p.replace(/\//g, '-');
+      }
+
+      var q = new URLSearchParams(location.search);
+      /* ORIGEM: 1) parâmetro ?origem= que o botão envia; 2) página de onde a pessoa veio (referrer); 3) direto */
+      var origem = limpa(q.get('origem'));
+      if (!origem) { try { var r = new URL(document.referrer); if (r.hostname === location.hostname) origem = limpa(nomeDe(r.pathname)); } catch (e) { } }
+      if (!origem) origem = 'direto';
+      var posicao = limpa(q.get('pos'));                   /* flutuante | rodape */
+
+      var texto = 'Olá! Vim pelo site e tenho uma dúvida sobre o Curso Prático SAP ABAP. (origem: ' + origem + ')';
+      var destino = 'https://wa.me/' + NUMERO + '?text=' + encodeURIComponent(texto);
+      var botao = document.getElementById('wp-btn'), cartao = document.getElementById('wp'), nota = document.getElementById('wp-nota');
+      botao.href = destino;
+
+      function mostraBotao() { cartao.classList.add('is-pronto'); }
+
+      var voltou = false;
+      try { var ts = +sessionStorage.getItem(CHAVE) || 0; voltou = ts && (Date.now() - ts) < 5 * 60 * 1000; } catch (e) { }
+
+      if (voltou) {                                        /* voltou do WhatsApp: não repete o redirecionamento nem o evento */
+        mostraBotao();
+        nota.textContent = 'Se a conversa já abriu, é só voltar ao WhatsApp.';
+        return;
+      }
+
+      /* 1) marca a conversão "Contato" já, sem esperar os 2 s (Pixel + servidor, mesmo event_id) */
+      var src = {}; try { src = JSON.parse(localStorage.getItem('_aes_src') || '{}'); } catch (e) { }
+      var variante = (src.utm_content && /-(lpcompleta|lpcurta)$/.test(src.utm_content)) ? RegExp.$1 : '';
+      var parametros = {
+        content_name: 'Contato WhatsApp', content_category: 'whatsapp',
+        origem_pagina: origem, posicao_botao: posicao || 'desconhecida', canal: 'whatsapp',
+        fonte: (window.AES_TRACK && window.AES_TRACK.fonte) || 'direto'
+      };
+      if (src.utm_campaign) parametros.campanha = src.utm_campaign;
+      if (src.utm_content) parametros.anuncio = src.utm_content;
+      if (variante) parametros.variante_lp = variante;
+      try { if (window.aesTrack) window.aesTrack('Contact', parametros); } catch (e) { }
+      try { if (window.clarity) { window.clarity('event', 'whatsapp_contato'); window.clarity('set', 'origem_whatsapp', origem); } } catch (e) { }
+      try { sessionStorage.setItem(CHAVE, String(Date.now())); } catch (e) { }
+
+      /* 2) em 2 s abre o WhatsApp e já deixa o botão de segurança à mostra */
+      setTimeout(function () {
+        mostraBotao();
+        location.href = destino;
+      }, ESPERA);
+    })();
+  </script>
+</body>
+
+</html>

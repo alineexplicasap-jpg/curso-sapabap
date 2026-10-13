@@ -5,6 +5,7 @@
     { "source": "/lp-v3", "destination": "/lp-v3.html" },
     { "source": "/lp-v4", "destination": "/lp-v4.html" },
     { "source": "/lp-v4-short", "destination": "/lp-v4-short.html" },
-    { "source": "/lp-teste", "destination": "/lp-teste.html" }
+    { "source": "/lp-teste", "destination": "/lp-teste.html" },
+    { "source": "/cta-wp", "destination": "/cta-wp.html" }
   ]
 }

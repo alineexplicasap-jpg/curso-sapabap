@@ -1,0 +1,85 @@
+/* WhatsApp: botão flutuante + linha do rodapé (todas as páginas) */
+
+/* ---------- linha no rodapé ---------- */
+.footer-wpp { margin: 0 0 16px; font-size: .95rem; text-align: center }
+.footer-wpp a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 4px;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(37, 211, 102, .8)
+}
+.footer-wpp a:hover { text-decoration-thickness: 2px }
+.footer-wpp svg { flex: none; width: 20px; height: 20px; fill: #25d366 }
+.footer-wpp strong { font-weight: 800 }
+
+/* ---------- botão flutuante (só aparece ao chegar no FAQ) ---------- */
+.wpp-flutuante {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 70;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 60px;
+  height: 60px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  font: 700 .9rem/1.1 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  box-shadow: 0 10px 26px rgba(18, 140, 74, .45), 0 2px 6px rgba(0, 0, 0, .18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(46px) scale(.5);
+  transform-origin: 100% 100%
+}
+.wpp-flutuante svg { flex: none; width: 30px; height: 30px; fill: #fff; margin-left: -1px }
+.wpp-flutuante__txt { display: none; white-space: nowrap; text-shadow: 0 1px 2px rgba(0, 0, 0, .25) }
+.wpp-flutuante::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid #25d366;
+  opacity: 0;
+  pointer-events: none
+}
+.wpp-flutuante.is-visivel {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  animation: wpp-entra .7s cubic-bezier(.34, 1.56, .64, 1) both
+}
+.wpp-flutuante.is-visivel::after { animation: wpp-onda 2.6s ease-out 1.2s infinite }
+.wpp-flutuante:hover { filter: brightness(1.05); transform: translateY(-2px) }
+.wpp-flutuante:focus-visible { outline: 3px solid #fff; outline-offset: 3px; box-shadow: 0 0 0 6px #128c4a }
+
+@keyframes wpp-entra {
+  0% { opacity: 0; transform: translateY(46px) scale(.5) }
+  60% { opacity: 1 }
+  100% { opacity: 1; transform: none }
+}
+@keyframes wpp-onda {
+  0% { opacity: .55; transform: scale(1) }
+  100% { opacity: 0; transform: scale(1.5) }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wpp-flutuante.is-visivel { animation: none }
+  .wpp-flutuante.is-visivel::after { animation: none }
+}
+
+@media (min-width: 901px) {
+  .wpp-flutuante { right: 24px; bottom: 24px }
+  .wpp-flutuante__txt { display: inline }
+}
+
+/* páginas com barra fixa de compra no celular: o botão sobe para não ficar por cima dela */
+@media (max-width: 900px) {
+  body.tem-cta-fixa .wpp-flutuante { bottom: calc(100px + env(safe-area-inset-bottom)) }
+}

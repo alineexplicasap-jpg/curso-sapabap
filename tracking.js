@@ -300,6 +300,7 @@
 
   var feitos = {};
   function umaVez(nome, fn) {
+    if (CFG.semFunil) return;        /* paginas utilitarias (ex.: /cta-wp): sem degraus de funil */
     if (feitos[nome]) return;
     feitos[nome] = true;
     fn();
