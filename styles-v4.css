@@ -1,0 +1,107 @@
+/* =========================================================
+   LP v4 — camada sobre o styles-v2-clara.css (LP clara)
+   Itens do plano: 2 (oferta mais cedo), 3 (sem barra fixa), 4 (cliques mortos).
+   Não altera a LP atual, a v2 nem a v3.
+   ========================================================= */
+
+/* ---------- fundos alternados na nova ordem das seções ---------- */
+.lp-v4 main > section:not(.hero) { background: var(--paper) }
+.lp-v4 main > section:not(.hero):nth-of-type(even) { background: var(--paper-2) }
+
+/* ---------- item 2: faixa de oferta logo depois dos benefícios ---------- */
+.miniofer { background: var(--card); border-block: 1px solid var(--line-2) }
+.miniofer__in { display: flex; align-items: center; justify-content: space-between; gap: 18px 28px; padding-top: 20px; padding-bottom: 20px }
+.miniofer__txt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 0 }
+.miniofer__txt strong { font-family: var(--serif); font-size: 1.55rem; font-weight: 600; color: var(--ink) }
+.miniofer__txt span { font-size: .9rem; font-weight: 600; color: var(--ink-2) }
+
+/* ---------- item 4: módulos em lista expansível ---------- */
+.lp-v4 .aprender__grid { align-items: start }
+.aprender__acc { padding: 0 }
+.aprender__sum {
+  display: block;
+  padding: 22px 24px;
+  cursor: pointer;
+  list-style: none;
+  -webkit-tap-highlight-color: rgba(169, 129, 36, .15)
+}
+.aprender__sum::-webkit-details-marker { display: none }
+.aprender__sumtop { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px }
+.aprender__sumtop .aprender__num { margin: 0 }
+.aprender__chev {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-2);
+  position: relative;
+  transition: background .18s ease
+}
+.aprender__chev::before, .aprender__chev::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 2px;
+  margin: -1px 0 0 -6px;
+  background: var(--gold);
+  transition: transform .18s ease
+}
+.aprender__chev::after { transform: rotate(90deg) }
+.aprender__acc[open] > .aprender__sum .aprender__chev { background: var(--gold-soft) }
+.aprender__acc[open] > .aprender__sum .aprender__chev::after { transform: rotate(0) }
+.aprender__sum .aprender__cardtitle { margin-bottom: 8px }
+.aprender__hint { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold) }
+.aprender__acc[open] .aprender__hint { display: none }
+.aprender__body { padding: 0 24px 24px }
+.aprender__sum:focus-visible { outline: 3px solid var(--gold-2); outline-offset: -3px; border-radius: 18px }
+
+/* ---------- item 4: jornada e método deixam de parecer botões ---------- */
+.lp-v4 .jornada__step {
+  background: transparent;
+  border: 0;
+  border-left: 2px solid var(--gold-2);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 4px 0 6px 24px;
+  position: relative
+}
+.lp-v4 .jornada__step::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold-2)
+}
+.lp-v4 .jornada__bullet { display: none }
+.lp-v4 .metodo__card {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--line-2);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 24px 6px 8px
+}
+
+/* ---------- item 4: retorno visível ao tocar em links âncora ---------- */
+@keyframes alvo-pulso {
+  0% { outline: 3px solid rgba(169, 129, 36, 0); outline-offset: 6px }
+  25% { outline: 3px solid rgba(169, 129, 36, .55); outline-offset: 10px }
+  100% { outline: 3px solid rgba(169, 129, 36, 0); outline-offset: 14px }
+}
+.alvo-pulso { animation: alvo-pulso 1.1s ease-out; border-radius: 12px }
+@media (prefers-reduced-motion: reduce) { .alvo-pulso { animation: none } }
+
+/* ---------- celular ---------- */
+@media (max-width: 900px) {
+  .miniofer__in { flex-direction: column; align-items: stretch; text-align: center; gap: 14px; padding-top: 18px; padding-bottom: 18px }
+  .miniofer__txt { justify-content: center }
+  .miniofer .cta { width: 100% }
+  .aprender__sum { padding: 20px 18px }
+  .aprender__body { padding: 0 18px 20px }
+  .lp-v4 .jornada__timeline { gap: 26px }
+}
