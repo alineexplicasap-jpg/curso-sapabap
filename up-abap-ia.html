@@ -57,27 +57,25 @@
 
 <body class="tem-cta-fixa">
 
-  <!-- ========================== TOPO (vídeo + contador) ========================== -->
+  <!-- ========================== CONTADOR NO TOPO (fica visível ao rolar) ========================== -->
+  <div class="up-topbar" data-contador role="timer" aria-label="Tempo restante da condição especial">
+    <span class="up-topbar__label">⏳ Esta condição expira em</span>
+    <span class="up-topbar__clock mono" data-contador-tempo>03:00</span>
+    <span class="up-topbar__hint">minutos</span>
+  </div>
+
+  <!-- ========================== TOPO (título + vídeo) ========================== -->
   <section class="up-hero">
     <div class="container">
       <div class="up-hero__inner">
 
-        <div class="up-hero__alert">
-          <span class="up-hero__alert-big">🔥 OPORTUNIDADE ÚNICA!</span>
-          <span class="up-hero__alert-small">Sua matrícula foi confirmada… mas tenho uma condição especial para
-            você</span>
-        </div>
-
-        <div class="up-timer" data-contador>
-          <span class="up-timer__label">Esta condição expira em</span>
-          <span class="up-timer__clock mono" data-contador-tempo aria-live="polite">03:00</span>
-          <span class="up-timer__hint">minutos</span>
-        </div>
-
-        <h1 class="up-hero__title">
-          Você acabou de dar um passo em ABAP. <span class="accent">Agora aprenda ABAP + IA</span> em uma condição
-          exclusiva.
+        <h1 class="up-hero__title up-hero__title--passo">
+          Falta ainda <span class="accent">mais um passo</span> para concluir a sua compra
         </h1>
+
+        <p class="up-hero__chamada">Assista o vídeo abaixo para entender esta oportunidade única.</p>
+
+        <p class="up-hero__audio"><span aria-hidden="true">🔊</span> Ative o áudio, pois esta oportunidade não irá se repetir.</p>
 
         <div class="up-video">
           <iframe src="https://www.youtube-nocookie.com/embed/vURVJuCoOJE?rel=0&modestbranding=1"

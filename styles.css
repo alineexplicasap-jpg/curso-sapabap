@@ -2926,3 +2926,79 @@ section {
     padding: 72px 0
   }
 }
+
+/* ---------- UPSELL: contador no topo + chamada do vídeo ---------- */
+.up-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  padding: 10px 16px;
+  background: #1a0b0a;
+  border-bottom: 2px solid #ff8a7a;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .35)
+}
+
+.up-topbar__label,
+.up-topbar__hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .85)
+}
+
+.up-topbar__clock {
+  min-width: 4.2ch;
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  color: #ff8a7a;
+  font-variant-numeric: tabular-nums
+}
+
+.up-topbar.is-esgotado { border-bottom-color: rgba(255, 255, 255, .25) }
+.up-topbar.is-esgotado .up-topbar__clock { color: rgba(255, 255, 255, .6) }
+
+/* o overflow-x:hidden global (html/body) impede o sticky; "clip" corta igual, sem criar rolagem própria */
+html:has(.up-topbar),
+html:has(.up-topbar) body { overflow-x: clip }
+
+.up-hero__title--passo { margin-bottom: 16px }
+
+.up-hero__chamada {
+  margin: 0 auto 10px;
+  max-width: 680px;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.4;
+  color: #fff
+}
+
+.up-hero__audio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto 22px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 183, 64, .55);
+  background: rgba(244, 183, 64, .1);
+  font-size: clamp(.92rem, 2vw, 1.05rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--gold-2)
+}
+
+@media (max-width: 900px) {
+  .up-topbar { padding: 8px 12px; gap: 4px 10px }
+  .up-topbar__label, .up-topbar__hint { font-size: .62rem }
+  .up-topbar__clock { font-size: 1.5rem }
+  .up-hero__audio { padding: 8px 14px }
+}
