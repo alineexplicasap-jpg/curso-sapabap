@@ -2938,9 +2938,9 @@ section {
   flex-wrap: wrap;
   gap: 6px 14px;
   padding: 10px 16px;
-  background: #1a0b0a;
-  border-bottom: 2px solid #ff8a7a;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, .35)
+  background: linear-gradient(90deg, #b91c1c 0%, #dc2626 50%, #b91c1c 100%);
+  border-bottom: 2px solid #fecaca;
+  box-shadow: 0 6px 24px rgba(127, 29, 29, .5)
 }
 
 .up-topbar__label,
@@ -2950,7 +2950,7 @@ section {
   font-weight: 700;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, .85)
+  color: #fff
 }
 
 .up-topbar__clock {
@@ -2959,11 +2959,12 @@ section {
   font-weight: 800;
   line-height: 1;
   text-align: center;
-  color: #ff8a7a;
-  font-variant-numeric: tabular-nums
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, .35)
 }
 
-.up-topbar.is-esgotado { border-bottom-color: rgba(255, 255, 255, .25) }
+.up-topbar.is-esgotado { background: #3f1d1d; border-bottom-color: rgba(255, 255, 255, .25); box-shadow: none }
 .up-topbar.is-esgotado .up-topbar__clock { color: rgba(255, 255, 255, .6) }
 
 /* o overflow-x:hidden global (html/body) impede o sticky; "clip" corta igual, sem criar rolagem própria */
