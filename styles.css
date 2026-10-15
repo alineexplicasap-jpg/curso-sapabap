@@ -2963,8 +2963,6 @@ section {
   font-variant-numeric: tabular-nums
 }
 
-.up-topbar.is-esgotado { background: #7f1d1d }
-.up-topbar.is-esgotado .up-topbar__clock { color: rgba(255, 255, 255, .6) }
 
 /* o overflow-x:hidden global (html/body) impede o sticky; "clip" corta igual, sem criar rolagem própria */
 html:has(.up-topbar),
