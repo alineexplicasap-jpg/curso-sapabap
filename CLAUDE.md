@@ -71,7 +71,7 @@ sapabap/
 │                            A hero anterior viveu em lp-hero-old/ até 23/09/2026; removida porque duplicava
 │                            Clarity e pixel, sujando heatmaps e eventos. Está no git em 5211789.
 ├── obrigado-sapabap.html   → página de obrigado (só PageView; Purchase vem da Hotmart)
-├── up-abap-ia.html         → upsell pós-compra "SAP ABAP + IA" (R$ 297). Vídeo no topo, contador de 3 min,
+├── up-abap-ia.html         → upsell pós-compra "SAP ABAP + IA" (R$ 497). Vídeo no topo, contador de 3 min,
 │                            oferta reaproveita as classes .preco__*. Checkout Hotmart M107397403U. noindex.
 ├── contador.js             → contador regressivo da página de upsell (3 min, início salvo no navegador)
 ├── cta-fixa.js             → script vanilla: mostra a barra fixa de CTA (.cta-fixa) depois de 2 telas de rolagem no mobile
