@@ -429,6 +429,9 @@
       /* quem vai direto ao checkout (barra fixa) tambem passou pela oferta:
          garante o degrau AddToCart antes do InitiateCheckout, sem duplicar */
       umaVez('AddToCart', function () { dispara('AddToCart', conteudo()); });
+      /* botoes do topo da pagina (data-aes-evento="AddToCart"): contam so AddToCart; o InitiateCheckout
+         fica para o botao da secao de oferta e a barra fixa */
+      if (link.getAttribute('data-aes-evento') === 'AddToCart') return;
       umaVez('InitiateCheckout', function () {
         var p = conteudo();
         p.num_items = 1;
