@@ -1173,6 +1173,19 @@
   <div class="footer-stripe"></div>
 
   <script src="wpp.js" defer></script>
+  <script>
+    /* seta "Saiba mais" do hero: rola suave até a segunda dobra (seção problema) */
+    (function () {
+      var seta = document.querySelector('.hero__rolar');
+      var alvo = document.getElementById('problema');
+      if (!seta || !alvo) return;
+      seta.addEventListener('click', function (e) {
+        e.preventDefault();
+        var topo = alvo.getBoundingClientRect().top + window.pageYOffset;
+        try { window.scrollTo({ top: topo, behavior: 'smooth' }); } catch (_) { window.scrollTo(0, topo); }
+      });
+    })();
+  </script>
 </body>
 
 </html>
