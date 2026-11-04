@@ -8,6 +8,7 @@
     { "source": "/lp-teste", "destination": "/lp-teste.html" },
     { "source": "/cta-wp", "destination": "/cta-wp.html" },
     { "source": "/lp-sb", "destination": "/lp-sb.html" },
-    { "source": "/old-261103", "destination": "/old-261103.html" }
+    { "source": "/old-261103", "destination": "/old-261103.html" },
+    { "source": "/lp-dl", "destination": "/lp-dl.html" }
   ]
 }
