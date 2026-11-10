@@ -1,11 +1,11 @@
-/* Visitante de fora do Brasil que abre a home vai para /lp-dl (oferta em dólar).
+/* Visitante de fora do Brasil que abre a home (ou /lp-20261110, mesma página) vai para /lp-dl (oferta em dólar).
    Roda na Vercel antes da página carregar: não pisca e o pixel só conta um PageView.
    - País vem do cabeçalho x-vercel-ip-country. Sem país conhecido, não redireciona.
    - Robôs (revisão de anúncio da Meta, Google etc.) não são redirecionados.
    - Teste: ?pais=US simula outro país; ?pais=BR força a home em reais.
    - Mantém UTMs e fbclid na URL de destino. */
 
-export const config = { matcher: '/' };
+export const config = { matcher: ['/', '/lp-20261110'] };
 
 const ROBO = /bot|crawl|spider|facebookexternalhit|facebot|meta-externalagent|lighthouse|headless/i;
 
