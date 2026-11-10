@@ -9,6 +9,7 @@
     { "source": "/cta-wp", "destination": "/cta-wp.html" },
     { "source": "/lp-sb", "destination": "/lp-sb.html" },
     { "source": "/old-261103", "destination": "/old-261103.html" },
-    { "source": "/lp-dl", "destination": "/lp-dl.html" }
+    { "source": "/lp-dl", "destination": "/lp-dl.html" },
+    { "source": "/lp-20261110", "destination": "/lp-20261110.html" }
   ]
 }
