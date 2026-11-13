@@ -47,6 +47,10 @@
     {
       "source": "/old-261110",
       "destination": "/old-261110.html"
+    },
+    {
+      "source": "/blackfriday",
+      "destination": "/blackfriday.html"
     }
   ]
 }

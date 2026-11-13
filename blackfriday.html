@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Black Friday SAP 27/11 · Grupo VIP · Aline Explica SAP</title>
+  <meta name="description" content="Black Friday dos cursos SAP da Aline Explica SAP, sexta 27/11. Entre no grupo VIP do WhatsApp para receber as ofertas." />
+  <meta name="theme-color" content="#0b0b0c" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Black Friday SAP · 27/11 · Grupo VIP" />
+  <meta property="og:description" content="As ofertas de Black Friday dos cursos SAP da Aline são anunciadas no grupo VIP do WhatsApp." />
+  <meta property="og:image" content="https://lp.alineexplicasap.com.br/assets/blackfriday/og-blackfriday.jpg" />
+  <meta property="og:url" content="https://lp.alineexplicasap.com.br/blackfriday" />
+
+  <link rel="preload" href="assets/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="assets/blackfriday/aline-bf-hero-900.webp" imagesrcset="assets/blackfriday/aline-bf-hero-900.webp 900w, assets/blackfriday/aline-bf-hero-1300.webp 1300w" imagesizes="(min-width: 900px) 46vw, 100vw" fetchpriority="high">
+
+  <style>
+    @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url('assets/fonts/anton-latin.woff2') format('woff2') }
+    @font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('assets/fonts/plus-jakarta-sans-latin.woff2') format('woff2') }
+
+    /* ===== Identidade Black Friday SAP =====
+       preto profundo + brasa (laranja quente, conversa com o blazer da Aline) + osso.
+       Anton para os títulos (condensada, pesada, cara de campanha); Plus Jakarta para o texto. */
+    :root {
+      --preto: #0b0b0c;
+      --carvao: #141416;
+      --carvao-2: #1c1c1f;
+      --brasa: #ff5b1f;
+      --brasa-2: #ff8a3d;
+      --brasa-escura: #7a2108;
+      --osso: #f3eee6;
+      --osso-2: #cfc8bd;
+      --cinza: #8f897f;
+      --linha: rgba(243, 238, 230, .12);
+      --raio: 18px;
+      --titulo: 'Anton', Impact, 'Arial Narrow', sans-serif;
+      --texto: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth }
+    body { margin: 0; background: var(--preto); color: var(--osso); font-family: var(--texto); font-size: 1rem; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden }
+    img { display: block; max-width: 100% }
+    a { color: inherit }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap }
+
+    /* ---------- faixa corrida ---------- */
+    .faixa { position: relative; z-index: 3; background: var(--brasa); color: var(--preto); overflow: hidden; white-space: nowrap; font-family: var(--titulo); font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; padding: .5rem 0 }
+    .faixa__trilho { display: inline-flex; gap: 2.2rem; padding-left: 2.2rem; animation: corre 26s linear infinite }
+    .faixa__trilho span::after { content: "✦"; margin-left: 2.2rem; font-size: .8em; vertical-align: .08em }
+    @keyframes corre { to { transform: translateX(-50%) } }
+
+    /* ---------- hero ---------- */
+    .hero { position: relative; isolation: isolate; overflow: hidden; padding: 28px 20px 0; min-height: 92svh; display: grid; grid-template-rows: auto 1fr }
+    .hero::before { /* brasa atrás da Aline */
+      content: ""; position: absolute; z-index: -2; left: 50%; bottom: -12%; width: 140vw; max-width: 1100px; aspect-ratio: 1; transform: translateX(-50%);
+      background: radial-gradient(closest-side, rgba(255, 91, 31, .55), rgba(122, 33, 8, .35) 45%, transparent 72%); filter: blur(8px)
+    }
+    .hero::after { /* granulado leve */
+      content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+    }
+    .marca { display: flex; align-items: center; justify-content: space-between; gap: 12px; max-width: 1180px; width: 100%; margin: 0 auto }
+    .marca__nome { font-family: var(--titulo); font-size: 1.05rem; letter-spacing: .14em; text-transform: uppercase }
+    .marca__nome b { color: var(--brasa); font-weight: 400 }
+    .marca__data { font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--osso-2); border: 1px solid var(--linha); border-radius: 999px; padding: .38rem .8rem }
+
+    .hero__grade { max-width: 1180px; width: 100%; margin: 0 auto; display: grid; grid-template-columns: 1fr; align-items: end; gap: 0 }
+    .hero__texto { position: relative; z-index: 2; padding-top: 26px }
+    .hero__chamada { margin: 0 0 10px; font-size: .75rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--brasa-2) }
+    .hero__titulo { margin: 0; font-family: var(--titulo); font-weight: 400; text-transform: uppercase; line-height: .86; letter-spacing: -.005em; font-size: clamp(3.4rem, 17.5vw, 9.4rem) }
+    .hero__titulo .sap { display: block; font-size: .52em; line-height: 1; margin-top: .14em; color: var(--osso-2) }
+    .hero__titulo .sap em { font-style: normal; color: var(--brasa) }
+    .hero__lead { margin: 14px 0 0; max-width: 30ch; font-size: 1.06rem; color: var(--osso-2) }
+    .hero__lead strong { color: var(--osso) }
+
+    .hero__foto { position: relative; z-index: 1; margin: 8px -20px 0; display: flex; justify-content: center; pointer-events: none }
+    .hero__foto img { width: min(92vw, 520px); height: auto; mask-image: linear-gradient(to bottom, #000 78%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%) }
+    .hero__selo { /* data grande vazada atrás da foto */
+      position: absolute; z-index: -1; top: 4%; right: -2%; font-family: var(--titulo); font-size: clamp(7rem, 44vw, 17rem); line-height: .8; color: transparent; -webkit-text-stroke: 2px rgba(255, 138, 61, .55); letter-spacing: -.02em
+    }
+
+    /* ---------- bloco de ação (contagem + botão) ---------- */
+    .acao { position: relative; z-index: 3; margin: 22px 0 0; max-width: 520px }
+    .acao__cartao { background: rgba(20, 20, 22, .82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--linha); border-radius: 24px; padding: 22px 20px 20px; box-shadow: 0 30px 80px rgba(0, 0, 0, .55) }
+    .contagem__rotulo { margin: 0 0 10px; text-align: center; font-size: .72rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--cinza) }
+    .contagem { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0 0 18px }
+    .contagem div { background: var(--carvao-2); border: 1px solid var(--linha); border-radius: 12px; padding: 10px 4px 8px; text-align: center }
+    .contagem b { display: block; font-family: var(--titulo); font-weight: 400; font-size: clamp(1.9rem, 9vw, 2.6rem); line-height: 1; font-variant-numeric: tabular-nums }
+    .contagem span { display: block; margin-top: 4px; font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--cinza) }
+    .contagem--aberta { display: none; margin: 0 0 18px; text-align: center; font-family: var(--titulo); font-size: 1.6rem; text-transform: uppercase; color: var(--brasa) }
+    .is-aberta .contagem { display: none }
+    .is-aberta .contagem--aberta { display: block }
+
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; min-height: 60px; padding: 1rem 1.2rem;
+      border: 0; border-radius: 14px; background: var(--brasa); color: var(--preto); text-decoration: none; cursor: pointer;
+      font-family: var(--texto); font-weight: 800; font-size: 1rem; letter-spacing: .04em; text-transform: uppercase; line-height: 1.2;
+      box-shadow: 0 0 0 0 rgba(255, 91, 31, .55), 0 14px 34px rgba(255, 91, 31, .32); transition: transform .15s ease, background .15s ease;
+      animation: pulsa 2.4s ease-out infinite
+    }
+    .btn svg { flex: none; width: 24px; height: 24px; fill: currentColor }
+    .btn:hover { background: var(--brasa-2) }
+    .btn:active { transform: scale(.98) }
+    .btn:focus-visible { outline: 3px solid var(--osso); outline-offset: 3px }
+    @keyframes pulsa { 0% { box-shadow: 0 0 0 0 rgba(255, 91, 31, .5), 0 14px 34px rgba(255, 91, 31, .32) } 70% { box-shadow: 0 0 0 16px rgba(255, 91, 31, 0), 0 14px 34px rgba(255, 91, 31, .32) } 100% { box-shadow: 0 0 0 0 rgba(255, 91, 31, 0), 0 14px 34px rgba(255, 91, 31, .32) } }
+    .acao__nota { margin: 12px 0 0; text-align: center; font-size: .8rem; color: var(--cinza) }
+
+    /* ---------- seções ---------- */
+    .secao { max-width: 1180px; margin: 0 auto; padding: 84px 20px 0 }
+    .secao__rotulo { margin: 0 0 10px; font-size: .74rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--brasa-2) }
+    .secao__titulo { margin: 0 0 28px; font-family: var(--titulo); font-weight: 400; text-transform: uppercase; line-height: .95; font-size: clamp(2.3rem, 10vw, 4.2rem); max-width: 16ch }
+
+    .motivos { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px }
+    .motivo { position: relative; background: var(--carvao); border: 1px solid var(--linha); border-radius: var(--raio); padding: 22px 20px 22px 76px }
+    .motivo__num { position: absolute; left: 18px; top: 16px; font-family: var(--titulo); font-size: 2.6rem; line-height: 1; color: var(--brasa) }
+    .motivo h3 { margin: 0 0 4px; font-size: 1.08rem; font-weight: 800 }
+    .motivo p { margin: 0; color: var(--osso-2); font-size: .97rem }
+
+    .sobre { display: grid; gap: 28px; align-items: center }
+    .sobre__foto { position: relative; isolation: isolate; max-width: 420px; margin: 0 auto; width: 100% }
+    .sobre__foto::before { content: ""; position: absolute; z-index: -1; inset: 18% 6% 0; border-radius: 28px; background: linear-gradient(160deg, var(--brasa) 0%, var(--brasa-escura) 70%) }
+    .sobre__foto img { width: 100%; height: auto; mask-image: linear-gradient(to bottom, #000 86%, transparent); -webkit-mask-image: linear-gradient(to bottom, #000 86%, transparent) }
+    .sobre__nome { margin: 0 0 14px; font-family: var(--titulo); font-weight: 400; text-transform: uppercase; font-size: clamp(2.3rem, 10vw, 3.6rem); line-height: .95 }
+    .sobre p { margin: 0 0 14px; color: var(--osso-2) }
+    .numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 22px 0 0 }
+    .numeros div { border-top: 2px solid var(--brasa); padding-top: 10px }
+    .numeros b { display: block; font-family: var(--titulo); font-weight: 400; font-size: clamp(1.9rem, 8vw, 2.6rem); line-height: 1 }
+    .numeros span { display: block; margin-top: 4px; font-size: .78rem; color: var(--cinza); line-height: 1.35 }
+
+    .final { position: relative; isolation: isolate; overflow: hidden; margin: 96px 0 0; padding: 72px 20px 80px; text-align: center; border-top: 1px solid var(--linha) }
+    .final::before { content: ""; position: absolute; z-index: -1; left: 50%; top: 40%; width: 900px; aspect-ratio: 1; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(255, 91, 31, .35), transparent 70%) }
+    .final__data { margin: 0; font-family: var(--titulo); font-size: clamp(6rem, 34vw, 15rem); line-height: .82; color: transparent; -webkit-text-stroke: 2px var(--brasa) }
+    .final__titulo { margin: 18px auto 24px; max-width: 18ch; font-family: var(--titulo); font-weight: 400; text-transform: uppercase; font-size: clamp(1.9rem, 8vw, 3rem); line-height: 1 }
+    .final .btn { max-width: 520px; margin: 0 auto }
+
+    .rodape { padding: 32px 20px calc(110px + env(safe-area-inset-bottom)); text-align: center; font-size: .74rem; color: var(--cinza); border-top: 1px solid var(--linha) }
+    .rodape p { margin: 0 0 6px }
+
+    /* ---------- barra fixa no celular ---------- */
+    .fixa { position: fixed; z-index: 20; left: 0; right: 0; bottom: 0; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: linear-gradient(to top, rgba(11, 11, 12, .97) 60%, rgba(11, 11, 12, 0)); transform: translateY(110%); transition: transform .3s ease }
+    .fixa.is-visivel { transform: none }
+    .fixa .btn { min-height: 54px; font-size: .92rem; animation: none }
+
+    /* ---------- telas largas ---------- */
+    @media (min-width: 900px) {
+      .hero { padding: 34px 40px 0; min-height: 88vh }
+      .hero__grade { grid-template-columns: 1.05fr .95fr; gap: 24px }
+      .hero__texto { padding: 40px 0 64px }
+      .hero__titulo { font-size: clamp(6rem, 10.5vw, 10rem) }
+      .hero__foto { margin: 0; justify-content: flex-end }
+      .hero__foto img { width: 100%; max-width: 560px }
+      .hero__selo { top: 6%; right: 0; font-size: 18rem }
+      .hero { padding-bottom: 0 }
+      .secao { padding: 120px 40px 0 }
+      .motivos { grid-template-columns: repeat(3, 1fr); gap: 16px }
+      .motivo { padding: 76px 24px 28px }
+      .motivo__num { left: 24px; top: 20px }
+      .sobre { grid-template-columns: .85fr 1.15fr; gap: 64px }
+      .fixa { display: none }
+      .rodape { padding-bottom: 36px }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .faixa__trilho, .btn { animation: none }
+      html { scroll-behavior: auto }
+    }
+  </style>
+
+  <!-- Clarity -->
+  <script>
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "x0e1hiz89c");
+  </script>
+
+  <!-- Meta Pixel + CAPI (tracking.js). semFunil: só PageView e o Lead do clique no grupo. -->
+  <script>
+    window.AES_TRACK = {
+      pixel: '564676471958688',
+      pixelsExtra: ['940802978658042'],
+      semFunil: true,
+      content: { name: 'Black Friday 2026 - Grupo VIP', category: 'blackfriday', id: 'bf2026-grupo-vip', value: 0, currency: 'BRL' }
+    };
+  </script>
+  <script src="tracking.js"></script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=564676471958688&ev=PageView&noscript=1" alt="" />
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=940802978658042&ev=PageView&noscript=1" alt="" />
+  </noscript>
+</head>
+
+<body>
+  <div class="faixa" aria-hidden="true">
+    <div class="faixa__trilho">
+      <span>Black Friday SAP</span><span>Sexta, 27 de novembro</span><span>Grupo VIP no WhatsApp</span><span>Cursos da Aline Explica SAP</span>
+      <span>Black Friday SAP</span><span>Sexta, 27 de novembro</span><span>Grupo VIP no WhatsApp</span><span>Cursos da Aline Explica SAP</span>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="marca">
+      <span class="marca__nome">Aline <b>Explica</b> SAP</span>
+      <span class="marca__data">27 · 11 · 2026</span>
+    </div>
+
+    <div class="hero__grade">
+      <div class="hero__texto">
+        <p class="hero__chamada">Sexta, 27 de novembro</p>
+        <h1 class="hero__titulo">Black<br>Friday<span class="sap">dos cursos <em>SAP</em></span></h1>
+        <p class="hero__lead">As ofertas de Black Friday dos cursos da Aline vão ser anunciadas <strong>no grupo VIP do WhatsApp</strong>. Entre agora e receba o aviso assim que abrirem.</p>
+        <div class="acao" id="acao">
+          <div class="acao__cartao" id="cartao">
+            <p class="contagem__rotulo">A Black Friday começa em</p>
+            <div class="contagem" role="timer" aria-live="off">
+              <div><b data-c="d">--</b><span>dias</span></div>
+              <div><b data-c="h">--</b><span>horas</span></div>
+              <div><b data-c="m">--</b><span>min</span></div>
+              <div><b data-c="s">--</b><span>seg</span></div>
+            </div>
+            <p class="contagem--aberta">As ofertas estão no grupo</p>
+            <a class="btn js-grupo" data-posicao="hero" href="https://chat.whatsapp.com/HS5jFhhIDfZ1mdhtc8IPfT" rel="noopener">
+              <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.9-1.6l-.4-.3-3.8 1.2 1.2-3.7-.3-.4a10.4 10.4 0 0 1-1.7-5.8C5.1 9.9 10 5.1 16 5.1s10.9 4.8 10.9 10.7S22 26.4 16 26.4zm6-8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.1 1.4 3.4c.2.2 2.4 3.6 5.7 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.7-.4z" /></svg>
+              Entrar no grupo VIP
+            </a>
+            <p class="acao__nota">Grátis. Você pode sair do grupo quando quiser.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__foto">
+        <span class="hero__selo" aria-hidden="true">27</span>
+        <img src="assets/blackfriday/aline-bf-hero-900.webp"
+          srcset="assets/blackfriday/aline-bf-hero-900.webp 900w, assets/blackfriday/aline-bf-hero-1300.webp 1300w"
+          sizes="(min-width: 900px) 46vw, 100vw" width="900" height="1349"
+          alt="Aline Damasceno, da Aline Explica SAP, sorrindo com a mão no queixo" fetchpriority="high">
+      </div>
+    </div>
+
+  </header>
+
+  <main>
+    <section class="secao" aria-labelledby="t-motivos">
+      <p class="secao__rotulo">Por que entrar</p>
+      <h2 class="secao__titulo" id="t-motivos">Quem está no grupo fica sabendo primeiro</h2>
+      <ol class="motivos">
+        <li class="motivo">
+          <span class="motivo__num" aria-hidden="true">01</span>
+          <h3>Aviso na hora certa</h3>
+          <p>Você recebe a mensagem assim que as ofertas abrirem, sem precisar ficar procurando.</p>
+        </li>
+        <li class="motivo">
+          <span class="motivo__num" aria-hidden="true">02</span>
+          <h3>Ofertas dos cursos SAP</h3>
+          <p>As condições especiais de Black Friday dos cursos da Aline são divulgadas no grupo.</p>
+        </li>
+        <li class="motivo">
+          <span class="motivo__num" aria-hidden="true">03</span>
+          <h3>Um passo na sua carreira</h3>
+          <p>O conhecimento em SAP torna você mais atraente para os recrutadores e aumenta suas chances de emprego.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="secao" aria-labelledby="t-sobre">
+      <div class="sobre">
+        <div class="sobre__foto">
+          <img src="assets/blackfriday/aline-bf-sobre-800.webp" width="800" height="1395" loading="lazy" decoding="async"
+            alt="Aline Damasceno de blazer, sorrindo, com as mãos nos bolsos">
+        </div>
+        <div>
+          <p class="secao__rotulo">Quem ensina</p>
+          <h2 class="sobre__nome" id="t-sobre">Aline Damasceno</h2>
+          <p>Com mais de 30 anos de experiência em desenvolvimento de software e sistemas ERP, a Aline já ajudou milhares de pessoas a saírem do zero e entrarem no mercado SAP.</p>
+          <p>É especialista nos módulos MM (Gestão de Materiais), PM (Manutenção), WM (Armazéns) e em programação ABAP.</p>
+          <div class="numeros">
+            <div><b>30+</b><span>anos de experiência</span></div>
+            <div><b>5k+</b><span>profissionais treinados</span></div>
+            <div><b>4</b><span>módulos especializados</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="final" aria-labelledby="t-final">
+      <p class="final__data" aria-hidden="true">27.11</p>
+      <h2 class="final__titulo" id="t-final">Não fique de fora da Black Friday SAP</h2>
+      <a class="btn js-grupo" data-posicao="final" href="https://chat.whatsapp.com/HS5jFhhIDfZ1mdhtc8IPfT" rel="noopener">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.9-1.6l-.4-.3-3.8 1.2 1.2-3.7-.3-.4a10.4 10.4 0 0 1-1.7-5.8C5.1 9.9 10 5.1 16 5.1s10.9 4.8 10.9 10.7S22 26.4 16 26.4zm6-8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.1 1.4 3.4c.2.2 2.4 3.6 5.7 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.7-.4z" /></svg>
+        Entrar no grupo VIP
+      </a>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>COPYRIGHT 2026 – Aline Explica SAP – Todos os direitos reservados.</p>
+    <p>Este site não faz parte do site do Facebook ou da Meta Inc. e não é endossado pelo Facebook de forma alguma. FACEBOOK é uma marca comercial da Meta, Inc.</p>
+  </footer>
+
+  <div class="fixa" id="fixa">
+    <a class="btn js-grupo" data-posicao="barra-fixa" href="https://chat.whatsapp.com/HS5jFhhIDfZ1mdhtc8IPfT" rel="noopener">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.9-1.6l-.4-.3-3.8 1.2 1.2-3.7-.3-.4a10.4 10.4 0 0 1-1.7-5.8C5.1 9.9 10 5.1 16 5.1s10.9 4.8 10.9 10.7S22 26.4 16 26.4zm6-8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.1 1.4 3.4c.2.2 2.4 3.6 5.7 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.7-.4z" /></svg>
+      Entrar no grupo VIP
+    </a>
+  </div>
+
+  <script>
+    (function () {
+      /* ---- contagem até sexta 27/11/2026 00:00 (Brasília) ---- */
+      var ALVO = Date.parse('2026-11-27T00:00:00-03:00');
+      var cartao = document.getElementById('cartao');
+      var campos = {}; ['d', 'h', 'm', 's'].forEach(function (k) { campos[k] = cartao.querySelector('[data-c="' + k + '"]') });
+      function dois(n) { return (n < 10 ? '0' : '') + n }
+      function tic() {
+        var falta = ALVO - Date.now();
+        if (falta <= 0) { cartao.classList.add('is-aberta'); return false }
+        var s = Math.floor(falta / 1000);
+        campos.d.textContent = dois(Math.floor(s / 86400));
+        campos.h.textContent = dois(Math.floor(s % 86400 / 3600));
+        campos.m.textContent = dois(Math.floor(s % 3600 / 60));
+        campos.s.textContent = dois(s % 60);
+        return true;
+      }
+      if (tic()) var t = setInterval(function () { if (!tic()) clearInterval(t) }, 1000);
+
+      /* ---- barra fixa: aparece quando o cartão do topo sai da tela ---- */
+      var fixa = document.getElementById('fixa');
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) { fixa.classList.toggle('is-visivel', !e[0].isIntersecting && e[0].boundingClientRect.top < 0) })
+          .observe(document.getElementById('acao'));
+      }
+
+      /* ---- clique no grupo: Lead (Pixel + servidor) uma vez por visita, depois abre o WhatsApp ---- */
+      var CHAVE = '_aes_bf26_lead';
+      document.addEventListener('click', function (ev) {
+        var a = ev.target.closest && ev.target.closest('.js-grupo');
+        if (!a) return;
+        var ja = false; try { ja = !!sessionStorage.getItem(CHAVE) } catch (e) { }
+        if (ja) return;                               /* segue o link normalmente */
+        ev.preventDefault();
+        var src = {}; try { src = JSON.parse(localStorage.getItem('_aes_src') || '{}') } catch (e) { }
+        var p = { content_name: 'Black Friday 2026 - Grupo VIP', content_category: 'blackfriday', canal: 'whatsapp', posicao_botao: a.getAttribute('data-posicao') || '', fonte: (window.AES_TRACK && window.AES_TRACK.fonte) || 'direto' };
+        if (src.utm_campaign) p.campanha = src.utm_campaign;
+        if (src.utm_content) p.anuncio = src.utm_content;
+        try { if (window.aesTrack) window.aesTrack('Lead', p) } catch (e) { }
+        try { if (window.clarity) window.clarity('event', 'bf26_grupo_vip') } catch (e) { }
+        try { sessionStorage.setItem(CHAVE, '1') } catch (e) { }
+        setTimeout(function () { location.href = a.href }, 350);
+      });
+    })();
+  </script>
+</body>
+
+</html>
